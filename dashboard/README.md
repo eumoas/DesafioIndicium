@@ -3,6 +3,8 @@
 Dashboard analítico desenvolvido em React para apresentar os resultados do
 desafio sob três perspectivas: crescimento, operação e confiança nos dados.
 
+**Dashboard publicado:** https://desafioindicium.eumoas.workers.dev
+
 ## Arquitetura
 
 ```text
@@ -10,13 +12,14 @@ CSVs de origem
       ↓
 scripts/build_dashboard_data.py
       ↓
-public/data/dashboard.json (somente agregados, sem PII)
+public/data/dashboard.json (somente agregados, sem identificadores)
       ↓
 React + TypeScript + Tailwind + Recharts
 ```
 
-O navegador não recebe os CSVs brutos. O arquivo publicado contém apenas
-métricas agregadas e identificadores técnicos necessários para a análise.
+Os CSVs versionados pertencem ao cenário sintético do desafio. Mesmo assim, o
+navegador não os recebe: o arquivo publicado contém apenas métricas agregadas e
+identificadores técnicos necessários para a análise.
 
 ## Gerar os dados
 
@@ -44,8 +47,16 @@ npm run build
 npm run preview
 ```
 
-O conteúdo estático será criado em `dashboard/dist` e pode ser publicado em
-qualquer hospedagem de sites estáticos.
+O conteúdo estático será criado em `dashboard/dist`. Para publicar no Worker
+configurado em `wrangler.jsonc`:
+
+```bash
+npm run deploy
+```
+
+Na integração do Cloudflare Workers Builds, o diretório raiz é `dashboard`, o
+comando de build é `npm run build` e o comando de deploy é
+`npx wrangler deploy`.
 
 ## Premissas importantes
 
@@ -56,4 +67,3 @@ qualquer hospedagem de sites estáticos.
   complementaridade causal.
 - A previsão é um baseline de média móvel, não uma ordem automática de compra.
 - Nenhum dado pessoal de cliente é publicado pelo dashboard.
-

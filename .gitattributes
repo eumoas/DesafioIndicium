@@ -1,0 +1,2 @@
+# Preserva os CSVs sintéticos exatamente como foram fornecidos.
+*.csv -text

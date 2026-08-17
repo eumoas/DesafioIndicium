@@ -7,10 +7,15 @@ executiva por dashboard e PDF.
 
  **Autoria:** Miriam Oliveira de Aguiar Sobral — Cientista de Dados
 
+> **Dashboard online:** [desafioindicium.eumoas.workers.dev](https://desafioindicium.eumoas.workers.dev)
+
 O repositório prioriza rastreabilidade e interpretação responsável. Os números
 publicados seguem literalmente as regras disponíveis, enquanto hipóteses de
 negócio não confirmadas permanecem explícitas.
 
+> **Dados do desafio:** os 24 CSVs da raiz são integralmente **sintéticos e
+> fictícios**. Eles não representam pessoas, empresas ou operações reais e são
+> versionados neste repositório para permitir a reprodução completa da análise.
 
 ## Visão do desafio
 
@@ -92,7 +97,7 @@ Mensuração do resultado e aprendizado
 | Definir antes de medir | Status, granularidade, calendário, janela temporal e desempates são documentados |
 | Rastrear a evidência | CSV → script/SQL → agregado → dashboard/PDF permanece reproduzível |
 | Não esconder incerteza | Valor registrado não é chamado de receita; baseline não vira ordem de compra; similaridade não vira causalidade |
-| Democratizar com segurança | Personas exploram métricas e exportam recortes agregados, sem receber PII ou SQL irrestrito |
+| Democratizar com segurança | Personas exploram métricas e exportam recortes agregados, sem receber campos identificadores do cenário sintético ou SQL irrestrito |
 | Aprender com a ação | Recomendações comerciais são propostas como testes com grupo de controle e resultado incremental |
 | Evoluir pela necessidade | Soluções simples servem de baseline; complexidade adicional exige ganho mensurável |
 
@@ -277,7 +282,7 @@ depender de uma instância de banco durante a apresentação.
 
 ```text
 .
-├── *.csv                              # 24 fontes brutas; não publicar
+├── *.csv                              # 24 fontes sintéticas versionadas
 ├── Enunciado.md                       # contexto recebido
 ├── docs/                              # decisões, resultados e autocrítica
 │   ├── 01_eda_orders.md
@@ -293,7 +298,7 @@ depender de uma instância de banco durante a apresentação.
 │   ├── load.py                        # carga PostgreSQL
 │   ├── questao_6_1.py                 # previsão
 │   ├── questao_7_1.py                 # recomendação
-│   ├── build_dashboard_data.py        # contrato agregado sem PII
+│   ├── build_dashboard_data.py        # contrato agregado sem identificadores
 │   └── generate_executive_report.py   # PDF executivo
 ├── tests/                             # 41 testes unitários/integração local
 ├── outputs/                           # resultados técnicos de Q6 e Q7
@@ -430,6 +435,7 @@ frontend e não entram na contagem de 41 testes Python.
 | Entregável | Arquivo |
 |---|---|
 | Enunciado recebido | [Enunciado.md](Enunciado.md) |
+| Fontes sintéticas | 24 arquivos CSV versionados na raiz, incluindo [orders.csv](orders.csv), [order_items.csv](order_items.csv), [products.csv](products.csv) e [customers.csv](customers.csv) |
 | Relatório da Q1 | [docs/01_eda_orders.md](docs/01_eda_orders.md) |
 | Schema inferido | [schema.sql](schema.sql) |
 | Relatório da Q2 | [docs/02_schema.md](docs/02_schema.md) |
@@ -438,7 +444,7 @@ frontend e não entram na contagem de 41 testes Python.
 | SQL e relatório da Q5 | [sql/questao_5.sql](sql/questao_5.sql) · [docs/05_dimensao_calendario.md](docs/05_dimensao_calendario.md) |
 | Código, relatório e previsões da Q6 | [scripts/questao_6_1.py](scripts/questao_6_1.py) · [docs/06_previsao_demanda.md](docs/06_previsao_demanda.md) · [outputs/questao_6_previsoes.csv](outputs/questao_6_previsoes.csv) |
 | Código e ranking da Q7 | [scripts/questao_7_1.py](scripts/questao_7_1.py) · [outputs/questao_7_top_5.csv](outputs/questao_7_top_5.csv) |
-| Dashboard interativo local | [dashboard/](dashboard/) · [dashboard/README.md](dashboard/README.md) |
+| Dashboard interativo | [acessar online](https://desafioindicium.eumoas.workers.dev) · [código e execução local](dashboard/README.md) |
 | Contrato agregado do dashboard | [dashboard/public/data/dashboard.json](dashboard/public/data/dashboard.json) |
 | Roteiro de apresentação | [docs/08_dashboard_e_apresentacao.md](docs/08_dashboard_e_apresentacao.md) |
 | Resumo executivo | [deliverables/LH_Nautical_Resumo_Executivo.pdf](deliverables/LH_Nautical_Resumo_Executivo.pdf) |
@@ -457,9 +463,9 @@ frontend e não entram na contagem de 41 testes Python.
 | Média móvel de três meses | Baseline simples, barato e auditável | Ignora sazonalidade, promoções, ruptura e lead time |
 | Cosseno sobre interação binária | Recomendação reproduzível e sem peso arbitrário | Afinidade não prova causalidade ou complementaridade |
 | JSON agregado entre dados e interface | Navegador não acessa os CSVs brutos | Uma atualização exige regenerar o contrato |
-| Clientes rotulados por posição | Preserva utilidade visual sem expor PII | O dashboard não identifica quem deve receber a ação |
+| Clientes rotulados por posição | Preserva utilidade visual sem expor identificadores do cenário sintético | O dashboard não identifica quem deve receber a ação |
 
-## Qualidade e privacidade
+## Qualidade e minimização
 
 O gerador do dashboard lê somente as colunas necessárias. De `customers.csv`,
 ele carrega apenas a chave técnica para agregação e publica o top 10 como
@@ -481,25 +487,27 @@ Esses checks demonstram consistência observada, não qualidade semântica
 completa. Eles não definem quais status representam venda, não reconciliam
 receita contábil e não tornam futuras extrações automaticamente confiáveis.
 
-## Segurança e dados sensíveis
+## Dados sintéticos e segurança
 
-Os CSVs brutos **não são artefatos públicos**. Entre outros campos, eles contêm
-nomes, CPF/CNPJ, inscrições, e-mails, telefones e endereços de clientes e
-funcionários, além de identificadores fiscais e operacionais.
+Os 24 CSVs foram fornecidos para um desafio técnico e são **dados sintéticos**:
+nomes, CPF/CNPJ, inscrições, e-mails, telefones, endereços e identificadores não
+correspondem a titulares ou operações reais. Por isso, as fontes foram
+versionadas junto da solução e qualquer pessoa pode reproduzir os resultados a
+partir do mesmo snapshot.
 
-Antes de publicar, enviar a terceiros ou criar um repositório remoto:
+Ainda assim, a implementação mantém práticas que seriam obrigatórias com dados
+reais:
 
-1. remova os 24 CSVs brutos do pacote público e impeça seu versionamento;
-2. revise também `outputs/`, pois matrizes e arquivos técnicos podem conter
-   chaves pseudônimas de clientes, pedidos ou produtos;
-3. publique somente artefatos explicitamente agregados, como o JSON do
-   dashboard e o PDF, após revisão;
-4. nunca grave DSNs, senhas ou arquivos `.env` no repositório;
-5. evite passar senhas por `--dsn`, linha de comando, logs ou capturas de tela;
-6. aplique controle de acesso, retenção e descarte adequados às fontes locais.
+1. o dashboard público consome apenas agregados e aliases, não registros dos
+   CSVs;
+2. `outputs/` continua restrito aos artefatos explicitamente selecionados;
+3. DSNs, senhas, tokens e arquivos `.env` permanecem fora do Git;
+4. mensagens de erro não imprimem linhas completas nem credenciais;
+5. uma versão de produção exigiria controle de acesso, base legal, retenção,
+   minimização e descarte.
 
-O fato de o dashboard não conter PII **não torna o repositório inteiro seguro
-para publicação**, porque as fontes permanecem na raiz.
+O versionamento das fontes nesta entrega é uma decisão específica para dados
+fictícios e **não deve ser generalizado para bases pessoais reais**.
 
 ## Limitações e próximos passos
 
@@ -516,8 +524,8 @@ para publicação**, porque as fontes permanecem na raiz.
   promoção e prazo de fornecedor;
 - testar recomendações com grupo de controle antes de qualquer automação;
 - confirmar se os registros até 2026-12-31 pertencem ao corte oficial;
-- definir uma estratégia de publicação somente depois de separar fontes
-  sensíveis dos artefatos compartilháveis.
+- substituir o snapshot sintético por uma fonte governada e com controle de
+  acesso antes de adaptar a solução a um ambiente real.
 
 ## Perguntas de defesa
 
@@ -567,8 +575,9 @@ para publicação**, porque as fontes permanecem na raiz.
     carregar e provocar rollback controlado em uma instância real.
 
 12. **O navegador recebe dados pessoais?**  
-    Não. Ele consome o JSON agregado e rankings anonimizados. Os CSVs brutos
-    continuam sensíveis e devem permanecer fora de qualquer publicação.
+    Não. Ele consome o JSON agregado e rankings anonimizados. Os CSVs
+    versionados são sintéticos e ficam disponíveis apenas para reprodução do
+    desafio; a arquitetura do dashboard não os entrega ao navegador.
 
 13. **Qual é o próximo gate antes de uma decisão executiva?**  
     Aprovar status, moeda, reconhecimento e corte; depois reconciliar as fontes

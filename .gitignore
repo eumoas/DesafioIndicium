@@ -1,5 +1,4 @@
-# Dados-fonte e saídas em nível de registro podem conter informações pessoais.
-/*.csv
+# Saídas locais em nível de registro não fazem parte da entrega.
 /outputs/*
 !/outputs/questao_6_previsoes.csv
 !/outputs/questao_7_top_5.csv

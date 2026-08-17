@@ -7,8 +7,9 @@ A entrega complementar combina dois formatos:
 - [`dashboard/`](../dashboard/README.md): exploração interativa por perspectiva;
 - [`LH_Nautical_Resumo_Executivo.pdf`](../deliverables/LH_Nautical_Resumo_Executivo.pdf): narrativa fixa de oito páginas, em 16:9, para leitura ou apresentação.
 
-O dashboard é executado localmente. Esta documentação não pressupõe URL pública,
-hospedagem ou implantação já realizada.
+O dashboard está publicado em
+[desafioindicium.eumoas.workers.dev](https://desafioindicium.eumoas.workers.dev)
+e também pode ser executado localmente para reprodução.
 
 ## Roteiro de defesa — aproximadamente 6 minutos
 
@@ -96,8 +97,9 @@ correspondente da aba ativa.
 - **Valor registrado não é receita reconhecida:** `orders.total` é somado como
   está no arquivo. Não chamar a métrica de lucro, margem ou caixa; a moeda também
   precisa ser confirmada.
-- **Sem PII:** o JSON, o dashboard, o CSV exportado e o PDF usam somente
-  agregados e aliases de clientes.
+- **Sem identificadores individuais:** embora as fontes sejam sintéticas, o
+  JSON, o dashboard, o CSV exportado e o PDF usam somente agregados e aliases
+  de clientes.
 - **Há datas futuras no snapshot:** a fonte alcança 31/12/2026, posterior à data
   de geração desta entrega. O período deve ser tratado como cobertura do arquivo,
   não como estado operacional corrente, até que o corte seja validado.
@@ -174,7 +176,7 @@ npm run preview
 - regenerar primeiro o JSON e depois o PDF;
 - confirmar que o dashboard mostra o período de 01/01/2020 a 31/12/2026;
 - testar a navegação e os chips nas quatro visões;
-- baixar um CSV de cada visão e conferir que não contém PII;
+- baixar um CSV de cada visão e conferir que não contém campos identificadores;
 - abrir a prévia do mini-relatório em cada aba;
 - conferir as oito páginas do PDF e manter a ressalva “valor registrado”;
-- não apresentar URL pública ou implantação como concluída sem evidência externa.
+- abrir a URL pública em uma janela anônima e confirmar o carregamento do JSON.
