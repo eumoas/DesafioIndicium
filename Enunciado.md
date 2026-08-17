@@ -62,32 +62,4 @@ Sua missão é **realizar uma análise exploratória inicial nas tabelas** e res
 * Apenas observe, agregue e descreva  
 * O código deve ser enviado em SQL
 
-**Tarefas:** 
-
-**Parte 1** \- Visão geral da tabela orders
-
-Informe:
-
-* Quantidade total de linhas  
-* Intervalo de datas analisado (data mínima e máxima) da coluna created\_at
-
-**Parte 2 \-** Análise de valores numéricos
-
-Para a coluna "total", calcule:
-
-* Valor mínimo  
-* Valor máximo  
-* Valor médio
-
-**Parte 3** \- Interpretação
-
-Responda de forma resumida:
-
-Com base na análise exploratória realizada, escreva um breve diagnóstico sobre a confiabilidade da tabela o para análises futuras.
-
-Comente sobre:
-
-* possíveis outliers em "total",  
-* qualidade dos dados (valores nulos ou inconsistentes),  
-* e se você considera que o dataset está pronto para análises ou se exigiria tratamento prévio.
 
