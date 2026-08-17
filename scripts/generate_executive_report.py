@@ -2,8 +2,8 @@
 """Gera o resumo executivo em PDF da LH Nautical.
 
 O gerador prioriza ``dashboard/public/data/dashboard.json`` quando disponível e
-mantém um fallback reproduzível a partir dos CSVs em ``data/raw``. A saída contém apenas
-agregados; clientes são apresentados por aliases de ranking, sem PII.
+mantém um fallback reproduzível a partir dos CSVs em ``data/raw``. A saída contém
+apenas agregados; clientes são apresentados por aliases de ranking, sem PII.
 """
 
 from __future__ import annotations
@@ -20,6 +20,7 @@ from typing import Any, Dict, List, Mapping, MutableMapping, Optional, Sequence,
 
 import pandas as pd
 from reportlab.lib.colors import Color, HexColor
+from reportlab.lib.utils import ImageReader
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen import canvas
@@ -28,16 +29,23 @@ from reportlab.pdfgen import canvas
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_JSON = ROOT / "dashboard" / "public" / "data" / "dashboard.json"
 DEFAULT_OUTPUT = ROOT / "deliverables" / "LH_Nautical_Resumo_Executivo.pdf"
+PROFILE_PHOTO = ROOT / "docs" / "assets" / "miriam-oliveira-aguiar-sobral.jpeg"
+DASHBOARD_URL = "https://desafioindicium.eumoas.workers.dev/"
+REPOSITORY_URL = "https://github.com/eumoas/DesafioIndicium"
+LINKEDIN_URL = "https://www.linkedin.com/in/miriamaguiarsobral"
 
 # Proporção 16:9 em pontos PDF: 13 1/3 x 7 1/2 polegadas.
 PAGE_W = 960.0
 PAGE_H = 540.0
 MARGIN = 48.0
-TOTAL_PAGES = 9
+TOTAL_PAGES = 10
 
 INK = HexColor("#102A3A")
 NAVY = HexColor("#071E2B")
 NAVY_2 = HexColor("#0D2D3E")
+DASHBOARD_NAVY = HexColor("#05073F")
+DASHBOARD_BLUE = HexColor("#245BF3")
+DASHBOARD_LAVENDER = HexColor("#6D70FF")
 CREAM = HexColor("#F5F2EA")
 PAPER = HexColor("#FFFDFC")
 WHITE = HexColor("#FFFFFF")
@@ -854,6 +862,103 @@ class ExecutiveReport:
             cursor -= leading
         return cursor
 
+    def lh_mark(self, x: float, y: float, size: float) -> None:
+        """Desenha a marca náutica do dashboard sem depender de rasterização."""
+
+        self.c.saveState()
+        self.c.setFillColor(DASHBOARD_NAVY)
+        self.c.setStrokeColor(Color(0.67, 0.89, 0.90, alpha=0.28))
+        self.c.setLineWidth(0.8)
+        self.c.roundRect(
+            x,
+            y,
+            size,
+            size,
+            size * 0.24,
+            fill=1,
+            stroke=1,
+        )
+
+        center_x = x + size / 2
+        center_y = y + size / 2
+        self.c.setStrokeColor(Color(0.67, 0.89, 0.90, alpha=0.62))
+        self.c.setLineWidth(max(0.7, size * 0.032))
+        self.c.circle(center_x, center_y, size * 0.30, fill=0, stroke=1)
+
+        tick = size * 0.12
+        outer = size * 0.36
+        self.c.setStrokeColor(HexColor("#BBBAFB"))
+        self.c.setLineCap(1)
+        self.c.line(center_x, center_y + outer, center_x, center_y + outer - tick)
+        self.c.line(center_x, center_y - outer, center_x, center_y - outer + tick)
+        self.c.line(center_x - outer, center_y, center_x - outer + tick, center_y)
+        self.c.line(center_x + outer, center_y, center_x + outer - tick, center_y)
+
+        pointer = self.c.beginPath()
+        pointer.moveTo(x + size * 0.60, y + size * 0.69)
+        pointer.lineTo(x + size * 0.54, y + size * 0.47)
+        pointer.lineTo(x + size * 0.31, y + size * 0.34)
+        pointer.lineTo(x + size * 0.43, y + size * 0.57)
+        pointer.close()
+        self.c.setFillColor(DASHBOARD_BLUE)
+        self.c.setStrokeColor(WHITE)
+        self.c.setLineWidth(max(0.6, size * 0.025))
+        self.c.drawPath(pointer, fill=1, stroke=1)
+        self.c.setFillColor(WHITE)
+        self.c.circle(center_x, center_y, size * 0.046, fill=1, stroke=0)
+        self.c.restoreState()
+
+    def link_button(
+        self,
+        x: float,
+        y: float,
+        width: float,
+        label: str,
+        url: str,
+        fill: Color = DASHBOARD_BLUE,
+        text_color: Color = WHITE,
+        font_size: float = 7.5,
+    ) -> None:
+        """Renderiza um acesso visível e cria a anotação clicável no PDF."""
+
+        height = 30.0
+        self.rect(
+            x,
+            y,
+            width,
+            height,
+            fill,
+            9,
+            Color(1, 1, 1, alpha=0.18),
+        )
+        self.label(label, x + width / 2, y + 10.5, font_size, text_color, "bold", "center")
+        self.c.linkURL(url, (x, y, x + width, y + height), relative=0, thickness=0)
+
+    def profile_photo(self, x: float, y: float, size: float) -> None:
+        """Aplica corte circular à fotografia preservada em docs/assets."""
+
+        if not PROFILE_PHOTO.is_file():
+            raise FileNotFoundError(f"foto de perfil ausente: {PROFILE_PHOTO}")
+
+        self.c.saveState()
+        clip = self.c.beginPath()
+        clip.circle(x + size / 2, y + size / 2, size / 2)
+        self.c.clipPath(clip, stroke=0, fill=0)
+        self.c.drawImage(
+            ImageReader(str(PROFILE_PHOTO)),
+            x,
+            y,
+            width=size,
+            height=size,
+            preserveAspectRatio=True,
+            anchor="c",
+            mask="auto",
+        )
+        self.c.restoreState()
+        self.c.setStrokeColor(Color(0.67, 0.89, 0.90, alpha=0.65))
+        self.c.setLineWidth(2)
+        self.c.circle(x + size / 2, y + size / 2, size / 2, fill=0, stroke=1)
+
     def start_page(self, title: str, kicker: str, insight: Optional[str] = None) -> None:
         self.page_number += 1
         self.c.setFillColor(CREAM)
@@ -865,9 +970,10 @@ class ExecutiveReport:
         self.c.setStrokeColor(LINE)
         self.c.setLineWidth(0.8)
         self.c.line(MARGIN, 410, PAGE_W - MARGIN, 410)
-        for index in range(4):
-            self.c.setFillColor(TEAL if index == (self.page_number - 1) % 4 else LINE)
-            self.c.circle(PAGE_W - MARGIN - index * 13, 498, 2.7, fill=1, stroke=0)
+        self.lh_mark(PAGE_W - MARGIN - 24, 480, 24)
+        for index in range(3):
+            self.c.setFillColor(TEAL if index == (self.page_number - 1) % 3 else LINE)
+            self.c.circle(PAGE_W - MARGIN - 40 - index * 13, 492, 2.7, fill=1, stroke=0)
 
     def footer(self, note: str = "Dados agregados · sem PII") -> None:
         period = self.data["metadata"].get("sourcePeriod", {})
@@ -964,10 +1070,10 @@ class ExecutiveReport:
 
     def draw_cover(self) -> None:
         self.page_number += 1
-        self.c.setFillColor(NAVY)
+        self.c.setFillColor(DASHBOARD_NAVY)
         self.c.rect(0, 0, PAGE_W, PAGE_H, fill=1, stroke=0)
 
-        # Campo visual original inspirado em navegação e dados, sem uso de logo.
+        # Campo visual inspirado em navegação, dados e na identidade do dashboard.
         self.c.saveState()
         self.c.setStrokeColor(Color(0.49, 0.89, 0.82, alpha=0.20))
         self.c.setLineWidth(0.8)
@@ -996,7 +1102,28 @@ class ExecutiveReport:
             self.c.circle(x, y, radius, fill=1, stroke=0)
         self.c.restoreState()
 
-        self.label("LH NAUTICAL  /  VISÃO DE DADOS", MARGIN, 473, 10, MINT, "bold")
+        self.lh_mark(MARGIN, 454, 34)
+        self.label("LH NAUTICAL  /  VISÃO DE DADOS", MARGIN + 46, 467, 10, MINT, "bold")
+        self.link_button(
+            445,
+            456,
+            257,
+            "DASHBOARD · desafioindicium.eumoas.workers.dev",
+            DASHBOARD_URL,
+            HexColor("#111368"),
+            WHITE,
+            7.2,
+        )
+        self.link_button(
+            714,
+            456,
+            198,
+            "GITHUB · eumoas/DesafioIndicium",
+            REPOSITORY_URL,
+            DASHBOARD_LAVENDER,
+            WHITE,
+            7.2,
+        )
         self.paragraph("Resumo\nexecutivo", MARGIN, 373, 540, 57, 55, WHITE, "black")
         self.paragraph(
             "Do dado operacional à próxima decisão — com premissas, limites e sinais acionáveis.",
@@ -1009,7 +1136,15 @@ class ExecutiveReport:
             "regular",
             3,
         )
-        self.rect(MARGIN, 141, 510, 56, NAVY_2, 12, Color(0.49, 0.89, 0.82, alpha=0.25))
+        self.rect(
+            MARGIN,
+            141,
+            510,
+            56,
+            HexColor("#111368"),
+            12,
+            Color(0.49, 0.89, 0.82, alpha=0.25),
+        )
         metadata = self.data["metadata"]
         source_count = metadata.get("sourceFiles", 24)
         if isinstance(source_count, list):
@@ -1049,6 +1184,87 @@ class ExecutiveReport:
             "bold",
             "right",
         )
+        self.c.showPage()
+
+    def draw_profile(self) -> None:
+        self.start_page(
+            "Sobre a cientista de dados",
+            "09 · Autoria",
+            "Uma trajetória nexialista que conecta tecnologia, políticas públicas e inteligência artificial aplicada à indústria.",
+        )
+
+        self.rect(MARGIN, 58, 244, 326, DASHBOARD_NAVY, 18)
+        self.profile_photo(MARGIN + 29, 170, 186)
+        self.label("Miriam Oliveira", MARGIN + 22, 139, 14, WHITE, "black")
+        self.label("de Aguiar Sobral", MARGIN + 22, 120, 14, WHITE, "black")
+        self.label("CIENTISTA DE DADOS", MARGIN + 22, 97, 8, MINT, "bold")
+        self.link_button(
+            MARGIN + 18,
+            67,
+            208,
+            "linkedin.com/in/miriamaguiarsobral",
+            LINKEDIN_URL,
+            HexColor("#111368"),
+            WHITE,
+            7.3,
+        )
+
+        content_x = 324
+        self.label("PERFIL NEXIALISTA", content_x, 376, 8.2, TEAL_DARK, "bold")
+        self.paragraph(
+            "Conecto campos que nem sempre conversam. O nexo é prático: aplico o rigor metodológico da avaliação de políticas públicas para desenvolver e testar soluções de IA que funcionem fora do laboratório.",
+            content_x,
+            352,
+            588,
+            10.4,
+            14.2,
+            INK,
+            "medium",
+            5,
+        )
+
+        self.label("ATUAÇÃO ATUAL", content_x, 276, 8.2, TEAL_DARK, "bold")
+        self.paragraph(
+            "Hoje atuo em duas frentes. Na residência de IA da UniSENAI/FIESC, desenvolvo visão computacional para detecção de defeitos com YOLOv8, CNN e SAHI, deploy em AWS, automações com LLMs e chatbots educacionais. Como pesquisadora, realizo estudos e análises em educação, segurança e saúde.",
+            content_x,
+            252,
+            588,
+            9.5,
+            13.0,
+            MUTED,
+            "regular",
+            5,
+        )
+
+        self.rect(content_x, 72, 278, 124, PAPER, 14, LINE)
+        self.label("FORMAÇÃO", content_x + 17, 173, 8, TEAL_DARK, "bold")
+        self.paragraph(
+            "Mestrado em Gestão e Políticas Públicas — FGV\nBacharelado em Sistemas de Informação\nIA Aplicada — UniSENAI, em andamento\nInformação Quântica — SENAI CIMATEC, em andamento",
+            content_x + 17,
+            151,
+            244,
+            8.1,
+            14.0,
+            INK,
+            "medium",
+            6,
+        )
+
+        self.rect(616, 72, 296, 124, HexColor("#E8F0FF"), 14, HexColor("#C6D2FA"))
+        self.label("RECONHECIMENTO", 633, 173, 8, HexColor("#3D28D9"), "bold")
+        self.label("1º lugar", 633, 143, 22, DASHBOARD_NAVY, "black")
+        self.paragraph(
+            "Industry for Her · Accenture/VDI\nSolução de automação logística para a indústria alemã.",
+            633,
+            119,
+            252,
+            8.5,
+            12.0,
+            MUTED,
+            "medium",
+            4,
+        )
+        self.footer("perfil profissional · links clicáveis")
         self.c.showPage()
 
     def draw_decision_insights(self) -> None:
@@ -1616,6 +1832,7 @@ class ExecutiveReport:
         self.draw_pos()
         self.draw_forecast()
         self.draw_recommendations()
+        self.draw_profile()
         self.c.save()
 
 

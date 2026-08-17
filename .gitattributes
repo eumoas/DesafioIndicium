@@ -1,2 +1,8 @@
 # Preserva os CSVs sintéticos exatamente como foram fornecidos.
 *.csv -text
+
+# Artefatos visuais não devem ser tratados como texto em diffs ou merges.
+*.pdf binary
+*.jpg binary
+*.jpeg binary
+*.png binary
