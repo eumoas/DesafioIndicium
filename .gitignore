@@ -1,0 +1,29 @@
+# Dados-fonte e saídas em nível de registro podem conter informações pessoais.
+/*.csv
+/outputs/*
+!/outputs/questao_6_previsoes.csv
+!/outputs/questao_7_top_5.csv
+
+# Credenciais e configurações locais
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# Dashboard
+dashboard/node_modules/
+dashboard/dist/
+dashboard/.vite/
+
+# Editores e sistema operacional
+.DS_Store
+.idea/
+.vscode/
+*.log

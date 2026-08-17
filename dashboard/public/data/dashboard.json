@@ -1,0 +1,1267 @@
+{
+  "metadata": {
+    "title": "LH Nautical — Painel executivo",
+    "generatedAt": "2026-08-17T01:01:57+00:00",
+    "sourcePeriod": {
+      "start": "2020-01-01",
+      "end": "2026-12-31",
+      "field": "orders.placed_at"
+    },
+    "sourceFiles": 24,
+    "totalRecords": 433424,
+    "orderStatuses": [
+      "cancelled",
+      "confirmed",
+      "draft",
+      "paid"
+    ],
+    "scope": "Snapshot integral, sem filtro de status",
+    "displayCurrency": {
+      "code": "BRL",
+      "symbol": "R$",
+      "assumption": "Premissa de apresentação para a operação brasileira; orders não registra a moeda explicitamente."
+    },
+    "privacy": "Somente métricas agregadas; o ranking de clientes usa rótulos por posição.",
+    "assumptions": [
+      {
+        "id": "display-currency",
+        "title": "Moeda de apresentação",
+        "detail": "Os valores são exibidos em BRL/R$ como premissa do painel; a tabela orders não possui uma coluna de moeda."
+      },
+      {
+        "id": "status-scope",
+        "title": "Todos os status",
+        "detail": "cancelled, confirmed, draft, paid entram literalmente em todas as métricas, pois não existe regra de elegibilidade confirmada."
+      },
+      {
+        "id": "gross-sales",
+        "title": "Valor bruto registrado",
+        "detail": "A soma de orders.total não representa receita reconhecida; pagamentos, notas e devoluções não ajustam o valor."
+      },
+      {
+        "id": "elite-rule",
+        "title": "Regra de elite",
+        "detail": "Cliente elegível compra em pelo menos 13 categorias diretas; o desempate usa a chave interna crescente."
+      },
+      {
+        "id": "mixed-units",
+        "title": "Quantidades de categoria",
+        "detail": "A soma segue order_items.quantity e mistura unidades de medida como UN, PC, M e L."
+      },
+      {
+        "id": "weekday-calendar",
+        "title": "Calendário POS",
+        "detail": "Todos os dias entre a primeira e a última venda são considerados; dias sem pedido POS recebem zero."
+      },
+      {
+        "id": "forecast-policy",
+        "title": "Previsão walk-forward",
+        "detail": "Cada mês de 2026 usa os três meses reais anteriores; cadastros com nome exato 'Bússola de Bordo 702' são consolidados."
+      },
+      {
+        "id": "recommendation-policy",
+        "title": "Recomendação binária",
+        "detail": "Compras repetidas contam uma vez por par cliente-produto e a similaridade é calculada pelo cosseno."
+      }
+    ]
+  },
+  "executive": {
+    "cards": [
+      {
+        "id": "gross-sales",
+        "label": "Valor bruto registrado",
+        "value": 1406487201.8,
+        "format": "currency",
+        "detail": "Soma de orders.total; não é receita reconhecida"
+      },
+      {
+        "id": "orders",
+        "label": "Pedidos",
+        "value": 48998,
+        "format": "integer",
+        "detail": "Sem filtro de status ou período"
+      },
+      {
+        "id": "average-ticket",
+        "label": "Ticket médio",
+        "value": 28704.99,
+        "format": "currency",
+        "detail": "Total bruto dividido por pedidos"
+      },
+      {
+        "id": "customers",
+        "label": "Clientes cadastrados",
+        "value": 2000,
+        "format": "integer",
+        "detail": "Identificadores não publicados"
+      },
+      {
+        "id": "products",
+        "label": "Produtos",
+        "value": 500,
+        "format": "integer",
+        "detail": "Catálogo consolidado"
+      },
+      {
+        "id": "elite-eligibility",
+        "label": "Elegíveis ao grupo elite",
+        "value": 98.55,
+        "format": "percent",
+        "detail": "1.971 clientes"
+      }
+    ],
+    "insights": [
+      {
+        "id": "elite-selectivity",
+        "tone": "attention",
+        "title": "O corte elite é pouco seletivo",
+        "detail": "98,55% dos clientes atingem 13 categorias; o ranking é dominado pelo ticket médio."
+      },
+      {
+        "id": "elite-category",
+        "tone": "positive",
+        "title": "Hélices lidera o grupo elite",
+        "detail": "492 unidades somadas nos dez clientes selecionados."
+      },
+      {
+        "id": "weekday-pos",
+        "tone": "neutral",
+        "title": "Quinta-feira tem a menor média POS",
+        "detail": "A média diária é R$ 157.154,32; valor bruto isolado não sustenta uma decisão de fechamento."
+      },
+      {
+        "id": "forecast",
+        "tone": "attention",
+        "title": "O baseline subestima o trimestre",
+        "detail": "MAE de 19,44 unidades e déficit acumulado de 58,33 unidades."
+      }
+    ]
+  },
+  "sales": {
+    "monthly": [
+      {
+        "month": "2020-01",
+        "orders": 591,
+        "revenue": 17599425.4,
+        "averageTicket": 29779.06
+      },
+      {
+        "month": "2020-02",
+        "orders": 530,
+        "revenue": 14973718.09,
+        "averageTicket": 28252.3
+      },
+      {
+        "month": "2020-03",
+        "orders": 451,
+        "revenue": 12901114.12,
+        "averageTicket": 28605.57
+      },
+      {
+        "month": "2020-04",
+        "orders": 389,
+        "revenue": 11265891.6,
+        "averageTicket": 28961.16
+      },
+      {
+        "month": "2020-05",
+        "orders": 273,
+        "revenue": 7770973.97,
+        "averageTicket": 28465.11
+      },
+      {
+        "month": "2020-06",
+        "orders": 183,
+        "revenue": 5048184.47,
+        "averageTicket": 27585.71
+      },
+      {
+        "month": "2020-07",
+        "orders": 165,
+        "revenue": 4768695.63,
+        "averageTicket": 28901.19
+      },
+      {
+        "month": "2020-08",
+        "orders": 215,
+        "revenue": 6347597.87,
+        "averageTicket": 29523.71
+      },
+      {
+        "month": "2020-09",
+        "orders": 245,
+        "revenue": 6690693.54,
+        "averageTicket": 27308.95
+      },
+      {
+        "month": "2020-10",
+        "orders": 368,
+        "revenue": 10746071.78,
+        "averageTicket": 29201.28
+      },
+      {
+        "month": "2020-11",
+        "orders": 469,
+        "revenue": 13483970.37,
+        "averageTicket": 28750.47
+      },
+      {
+        "month": "2020-12",
+        "orders": 587,
+        "revenue": 17015946.89,
+        "averageTicket": 28987.98
+      },
+      {
+        "month": "2021-01",
+        "orders": 713,
+        "revenue": 20453106.89,
+        "averageTicket": 28685.98
+      },
+      {
+        "month": "2021-02",
+        "orders": 615,
+        "revenue": 16923270.81,
+        "averageTicket": 27517.51
+      },
+      {
+        "month": "2021-03",
+        "orders": 585,
+        "revenue": 16670289.23,
+        "averageTicket": 28496.22
+      },
+      {
+        "month": "2021-04",
+        "orders": 458,
+        "revenue": 12866450.0,
+        "averageTicket": 28092.69
+      },
+      {
+        "month": "2021-05",
+        "orders": 268,
+        "revenue": 7426697.13,
+        "averageTicket": 27711.56
+      },
+      {
+        "month": "2021-06",
+        "orders": 213,
+        "revenue": 5628792.05,
+        "averageTicket": 26426.25
+      },
+      {
+        "month": "2021-07",
+        "orders": 164,
+        "revenue": 4979815.75,
+        "averageTicket": 30364.73
+      },
+      {
+        "month": "2021-08",
+        "orders": 194,
+        "revenue": 5392821.0,
+        "averageTicket": 27798.05
+      },
+      {
+        "month": "2021-09",
+        "orders": 283,
+        "revenue": 8840414.53,
+        "averageTicket": 31238.21
+      },
+      {
+        "month": "2021-10",
+        "orders": 427,
+        "revenue": 12616207.95,
+        "averageTicket": 29546.15
+      },
+      {
+        "month": "2021-11",
+        "orders": 524,
+        "revenue": 15020872.67,
+        "averageTicket": 28665.79
+      },
+      {
+        "month": "2021-12",
+        "orders": 644,
+        "revenue": 17999667.42,
+        "averageTicket": 27949.79
+      },
+      {
+        "month": "2022-01",
+        "orders": 761,
+        "revenue": 22069353.11,
+        "averageTicket": 29000.46
+      },
+      {
+        "month": "2022-02",
+        "orders": 662,
+        "revenue": 18783308.4,
+        "averageTicket": 28373.58
+      },
+      {
+        "month": "2022-03",
+        "orders": 660,
+        "revenue": 19331967.71,
+        "averageTicket": 29290.86
+      },
+      {
+        "month": "2022-04",
+        "orders": 547,
+        "revenue": 16010733.74,
+        "averageTicket": 29270.08
+      },
+      {
+        "month": "2022-05",
+        "orders": 376,
+        "revenue": 10827082.99,
+        "averageTicket": 28795.43
+      },
+      {
+        "month": "2022-06",
+        "orders": 202,
+        "revenue": 5830498.06,
+        "averageTicket": 28863.85
+      },
+      {
+        "month": "2022-07",
+        "orders": 182,
+        "revenue": 5536482.02,
+        "averageTicket": 30420.23
+      },
+      {
+        "month": "2022-08",
+        "orders": 233,
+        "revenue": 7011927.47,
+        "averageTicket": 30094.11
+      },
+      {
+        "month": "2022-09",
+        "orders": 325,
+        "revenue": 9529211.54,
+        "averageTicket": 29320.65
+      },
+      {
+        "month": "2022-10",
+        "orders": 495,
+        "revenue": 14113818.39,
+        "averageTicket": 28512.76
+      },
+      {
+        "month": "2022-11",
+        "orders": 634,
+        "revenue": 18447354.97,
+        "averageTicket": 29096.77
+      },
+      {
+        "month": "2022-12",
+        "orders": 779,
+        "revenue": 22130314.18,
+        "averageTicket": 28408.62
+      },
+      {
+        "month": "2023-01",
+        "orders": 933,
+        "revenue": 26989655.99,
+        "averageTicket": 28927.82
+      },
+      {
+        "month": "2023-02",
+        "orders": 816,
+        "revenue": 24069633.84,
+        "averageTicket": 29497.1
+      },
+      {
+        "month": "2023-03",
+        "orders": 678,
+        "revenue": 19698502.94,
+        "averageTicket": 29053.84
+      },
+      {
+        "month": "2023-04",
+        "orders": 539,
+        "revenue": 16131216.37,
+        "averageTicket": 29928.05
+      },
+      {
+        "month": "2023-05",
+        "orders": 385,
+        "revenue": 10550225.38,
+        "averageTicket": 27403.18
+      },
+      {
+        "month": "2023-06",
+        "orders": 258,
+        "revenue": 7256253.38,
+        "averageTicket": 28125.01
+      },
+      {
+        "month": "2023-07",
+        "orders": 238,
+        "revenue": 6788789.76,
+        "averageTicket": 28524.33
+      },
+      {
+        "month": "2023-08",
+        "orders": 274,
+        "revenue": 7603988.82,
+        "averageTicket": 27751.78
+      },
+      {
+        "month": "2023-09",
+        "orders": 399,
+        "revenue": 11329334.66,
+        "averageTicket": 28394.32
+      },
+      {
+        "month": "2023-10",
+        "orders": 605,
+        "revenue": 17290051.31,
+        "averageTicket": 28578.6
+      },
+      {
+        "month": "2023-11",
+        "orders": 685,
+        "revenue": 20041073.26,
+        "averageTicket": 29257.04
+      },
+      {
+        "month": "2023-12",
+        "orders": 887,
+        "revenue": 26205501.07,
+        "averageTicket": 29543.97
+      },
+      {
+        "month": "2024-01",
+        "orders": 1067,
+        "revenue": 30529171.88,
+        "averageTicket": 28612.16
+      },
+      {
+        "month": "2024-02",
+        "orders": 918,
+        "revenue": 26122449.43,
+        "averageTicket": 28455.83
+      },
+      {
+        "month": "2024-03",
+        "orders": 860,
+        "revenue": 24937003.79,
+        "averageTicket": 28996.52
+      },
+      {
+        "month": "2024-04",
+        "orders": 607,
+        "revenue": 18171125.22,
+        "averageTicket": 29935.96
+      },
+      {
+        "month": "2024-05",
+        "orders": 465,
+        "revenue": 13446881.03,
+        "averageTicket": 28918.02
+      },
+      {
+        "month": "2024-06",
+        "orders": 273,
+        "revenue": 8160140.17,
+        "averageTicket": 29890.62
+      },
+      {
+        "month": "2024-07",
+        "orders": 279,
+        "revenue": 7841995.17,
+        "averageTicket": 28107.51
+      },
+      {
+        "month": "2024-08",
+        "orders": 321,
+        "revenue": 8733650.12,
+        "averageTicket": 27207.63
+      },
+      {
+        "month": "2024-09",
+        "orders": 403,
+        "revenue": 11260156.08,
+        "averageTicket": 27940.83
+      },
+      {
+        "month": "2024-10",
+        "orders": 684,
+        "revenue": 19017936.78,
+        "averageTicket": 27804.0
+      },
+      {
+        "month": "2024-11",
+        "orders": 804,
+        "revenue": 23047250.19,
+        "averageTicket": 28665.73
+      },
+      {
+        "month": "2024-12",
+        "orders": 985,
+        "revenue": 28843240.71,
+        "averageTicket": 29282.48
+      },
+      {
+        "month": "2025-01",
+        "orders": 1206,
+        "revenue": 33699758.63,
+        "averageTicket": 27943.42
+      },
+      {
+        "month": "2025-02",
+        "orders": 1011,
+        "revenue": 27401232.54,
+        "averageTicket": 27103.1
+      },
+      {
+        "month": "2025-03",
+        "orders": 1020,
+        "revenue": 29394674.45,
+        "averageTicket": 28818.31
+      },
+      {
+        "month": "2025-04",
+        "orders": 768,
+        "revenue": 22794835.76,
+        "averageTicket": 29680.78
+      },
+      {
+        "month": "2025-05",
+        "orders": 511,
+        "revenue": 14118784.07,
+        "averageTicket": 27629.71
+      },
+      {
+        "month": "2025-06",
+        "orders": 357,
+        "revenue": 10145461.78,
+        "averageTicket": 28418.66
+      },
+      {
+        "month": "2025-07",
+        "orders": 310,
+        "revenue": 8819612.28,
+        "averageTicket": 28450.36
+      },
+      {
+        "month": "2025-08",
+        "orders": 392,
+        "revenue": 11254300.84,
+        "averageTicket": 28709.95
+      },
+      {
+        "month": "2025-09",
+        "orders": 509,
+        "revenue": 14157283.18,
+        "averageTicket": 27813.92
+      },
+      {
+        "month": "2025-10",
+        "orders": 771,
+        "revenue": 23001813.97,
+        "averageTicket": 29833.74
+      },
+      {
+        "month": "2025-11",
+        "orders": 998,
+        "revenue": 29407151.46,
+        "averageTicket": 29466.08
+      },
+      {
+        "month": "2025-12",
+        "orders": 1104,
+        "revenue": 31470788.32,
+        "averageTicket": 28506.15
+      },
+      {
+        "month": "2026-01",
+        "orders": 1383,
+        "revenue": 39108714.08,
+        "averageTicket": 28278.17
+      },
+      {
+        "month": "2026-02",
+        "orders": 1097,
+        "revenue": 31544113.45,
+        "averageTicket": 28754.89
+      },
+      {
+        "month": "2026-03",
+        "orders": 1167,
+        "revenue": 33003108.68,
+        "averageTicket": 28280.3
+      },
+      {
+        "month": "2026-04",
+        "orders": 835,
+        "revenue": 24113449.15,
+        "averageTicket": 28878.38
+      },
+      {
+        "month": "2026-05",
+        "orders": 570,
+        "revenue": 16954606.5,
+        "averageTicket": 29744.92
+      },
+      {
+        "month": "2026-06",
+        "orders": 421,
+        "revenue": 11619717.5,
+        "averageTicket": 27600.28
+      },
+      {
+        "month": "2026-07",
+        "orders": 355,
+        "revenue": 10330624.48,
+        "averageTicket": 29100.35
+      },
+      {
+        "month": "2026-08",
+        "orders": 392,
+        "revenue": 10847727.4,
+        "averageTicket": 27672.77
+      },
+      {
+        "month": "2026-09",
+        "orders": 635,
+        "revenue": 18261368.54,
+        "averageTicket": 28758.06
+      },
+      {
+        "month": "2026-10",
+        "orders": 909,
+        "revenue": 25948784.27,
+        "averageTicket": 28546.52
+      },
+      {
+        "month": "2026-11",
+        "orders": 1136,
+        "revenue": 33014703.53,
+        "averageTicket": 29062.24
+      },
+      {
+        "month": "2026-12",
+        "orders": 1368,
+        "revenue": 38956617.85,
+        "averageTicket": 28477.06
+      }
+    ],
+    "statuses": [
+      {
+        "status": "paid",
+        "orders": 34365,
+        "revenue": 985741294.26,
+        "averageTicket": 28684.45,
+        "orderSharePct": 70.14,
+        "revenueSharePct": 70.09
+      },
+      {
+        "status": "confirmed",
+        "orders": 7335,
+        "revenue": 213625785.28,
+        "averageTicket": 29124.17,
+        "orderSharePct": 14.97,
+        "revenueSharePct": 15.19
+      },
+      {
+        "status": "cancelled",
+        "orders": 4847,
+        "revenue": 137418441.62,
+        "averageTicket": 28351.24,
+        "orderSharePct": 9.89,
+        "revenueSharePct": 9.77
+      },
+      {
+        "status": "draft",
+        "orders": 2451,
+        "revenue": 69701680.64,
+        "averageTicket": 28438.06,
+        "orderSharePct": 5.0,
+        "revenueSharePct": 4.96
+      }
+    ],
+    "channels": [
+      {
+        "channel": "ecommerce",
+        "orders": 34342,
+        "revenue": 987213886.5,
+        "averageTicket": 28746.55,
+        "orderSharePct": 70.09,
+        "revenueSharePct": 70.19
+      },
+      {
+        "channel": "pos",
+        "orders": 14656,
+        "revenue": 419273315.3,
+        "averageTicket": 28607.62,
+        "orderSharePct": 29.91,
+        "revenueSharePct": 29.81
+      }
+    ]
+  },
+  "customers": {
+    "eliteTop10": [
+      {
+        "rank": 1,
+        "customerLabel": "Cliente elite 01",
+        "totalRevenue": 1087838.44,
+        "frequency": 26,
+        "averageTicket": 41839.94,
+        "categoryDiversity": 14
+      },
+      {
+        "rank": 2,
+        "customerLabel": "Cliente elite 02",
+        "totalRevenue": 916262.58,
+        "frequency": 22,
+        "averageTicket": 41648.3,
+        "categoryDiversity": 14
+      },
+      {
+        "rank": 3,
+        "customerLabel": "Cliente elite 03",
+        "totalRevenue": 1082775.89,
+        "frequency": 26,
+        "averageTicket": 41645.23,
+        "categoryDiversity": 14
+      },
+      {
+        "rank": 4,
+        "customerLabel": "Cliente elite 04",
+        "totalRevenue": 655737.2,
+        "frequency": 16,
+        "averageTicket": 40983.57,
+        "categoryDiversity": 14
+      },
+      {
+        "rank": 5,
+        "customerLabel": "Cliente elite 05",
+        "totalRevenue": 815471.3,
+        "frequency": 20,
+        "averageTicket": 40773.57,
+        "categoryDiversity": 14
+      },
+      {
+        "rank": 6,
+        "customerLabel": "Cliente elite 06",
+        "totalRevenue": 726127.99,
+        "frequency": 18,
+        "averageTicket": 40340.44,
+        "categoryDiversity": 14
+      },
+      {
+        "rank": 7,
+        "customerLabel": "Cliente elite 07",
+        "totalRevenue": 1040553.09,
+        "frequency": 26,
+        "averageTicket": 40021.27,
+        "categoryDiversity": 14
+      },
+      {
+        "rank": 8,
+        "customerLabel": "Cliente elite 08",
+        "totalRevenue": 997616.46,
+        "frequency": 25,
+        "averageTicket": 39904.66,
+        "categoryDiversity": 14
+      },
+      {
+        "rank": 9,
+        "customerLabel": "Cliente elite 09",
+        "totalRevenue": 677297.78,
+        "frequency": 17,
+        "averageTicket": 39841.05,
+        "categoryDiversity": 14
+      },
+      {
+        "rank": 10,
+        "customerLabel": "Cliente elite 10",
+        "totalRevenue": 1146455.22,
+        "frequency": 29,
+        "averageTicket": 39532.94,
+        "categoryDiversity": 14
+      }
+    ],
+    "eligibility": {
+      "rule": "Pelo menos 13 categorias diretas",
+      "minimumCategories": 13,
+      "registeredCustomers": 2000,
+      "customersWithOrders": 2000,
+      "eligibleCustomers": 1971,
+      "eligibleSharePct": 98.55,
+      "categoryDistribution": [
+        {
+          "categories": 11,
+          "customers": 2
+        },
+        {
+          "categories": 12,
+          "customers": 27
+        },
+        {
+          "categories": 13,
+          "customers": 200
+        },
+        {
+          "categories": 14,
+          "customers": 1771
+        }
+      ]
+    },
+    "topEliteCategories": [
+      {
+        "rank": 1,
+        "category": "Hélices",
+        "quantity": 492,
+        "sharePct": 10.6
+      },
+      {
+        "rank": 2,
+        "category": "Coletes Salva-Vidas",
+        "quantity": 393,
+        "sharePct": 8.46
+      },
+      {
+        "rank": 3,
+        "category": "Eletrônica Náutica",
+        "quantity": 392,
+        "sharePct": 8.44
+      },
+      {
+        "rank": 4,
+        "category": "Âncoras",
+        "quantity": 387,
+        "sharePct": 8.34
+      },
+      {
+        "rank": 5,
+        "category": "Iluminação",
+        "quantity": 333,
+        "sharePct": 7.17
+      },
+      {
+        "rank": 6,
+        "category": "Manutenção",
+        "quantity": 330,
+        "sharePct": 7.11
+      },
+      {
+        "rank": 7,
+        "category": "SEGURANÇA",
+        "quantity": 325,
+        "sharePct": 7.0
+      },
+      {
+        "rank": 8,
+        "category": "Velas",
+        "quantity": 313,
+        "sharePct": 6.74
+      },
+      {
+        "rank": 9,
+        "category": "Pintura Marítima",
+        "quantity": 307,
+        "sharePct": 6.61
+      },
+      {
+        "rank": 10,
+        "category": "Acessórios de Convés",
+        "quantity": 305,
+        "sharePct": 6.57
+      },
+      {
+        "rank": 11,
+        "category": "Motores",
+        "quantity": 279,
+        "sharePct": 6.01
+      },
+      {
+        "rank": 12,
+        "category": "Pesca",
+        "quantity": 278,
+        "sharePct": 5.99
+      },
+      {
+        "rank": 13,
+        "category": "Equipamentos",
+        "quantity": 255,
+        "sharePct": 5.49
+      },
+      {
+        "rank": 14,
+        "category": "Cabos",
+        "quantity": 254,
+        "sharePct": 5.47
+      }
+    ]
+  },
+  "operations": {
+    "weekdayPos": [
+      {
+        "isoWeekday": 1,
+        "weekday": "Segunda-feira",
+        "averageDailySales": 158241.15,
+        "calendarDays": 365,
+        "zeroSalesDays": 7,
+        "isLowest": false
+      },
+      {
+        "isoWeekday": 2,
+        "weekday": "Terça-feira",
+        "averageDailySales": 166118.83,
+        "calendarDays": 365,
+        "zeroSalesDays": 8,
+        "isLowest": false
+      },
+      {
+        "isoWeekday": 3,
+        "weekday": "Quarta-feira",
+        "averageDailySales": 173605.44,
+        "calendarDays": 366,
+        "zeroSalesDays": 10,
+        "isLowest": false
+      },
+      {
+        "isoWeekday": 4,
+        "weekday": "Quinta-feira",
+        "averageDailySales": 157154.32,
+        "calendarDays": 366,
+        "zeroSalesDays": 20,
+        "isLowest": true
+      },
+      {
+        "isoWeekday": 5,
+        "weekday": "Sexta-feira",
+        "averageDailySales": 170193.68,
+        "calendarDays": 365,
+        "zeroSalesDays": 10,
+        "isLowest": false
+      },
+      {
+        "isoWeekday": 6,
+        "weekday": "Sábado",
+        "averageDailySales": 164858.27,
+        "calendarDays": 365,
+        "zeroSalesDays": 11,
+        "isLowest": false
+      },
+      {
+        "isoWeekday": 7,
+        "weekday": "Domingo",
+        "averageDailySales": 157616.13,
+        "calendarDays": 365,
+        "zeroSalesDays": 12,
+        "isLowest": false
+      }
+    ],
+    "forecast": {
+      "product": "Bússola de Bordo 702",
+      "matchingProductRecords": 2,
+      "method": "Média móvel de 3 meses, walk-forward",
+      "windowMonths": 3,
+      "trainPeriod": {
+        "start": "2020-01",
+        "end": "2025-12"
+      },
+      "testPeriod": {
+        "start": "2026-01",
+        "end": "2026-03"
+      },
+      "mae": 19.444444,
+      "predictedTotal": 148.666667,
+      "actualTotal": 207,
+      "shortfall": 58.333333,
+      "series": [
+        {
+          "month": "2026-01",
+          "prediction": 38.666667,
+          "actual": 79,
+          "absoluteError": 40.333333
+        },
+        {
+          "month": "2026-02",
+          "prediction": 53.666667,
+          "actual": 68,
+          "absoluteError": 14.333333
+        },
+        {
+          "month": "2026-03",
+          "prediction": 56.333333,
+          "actual": 60,
+          "absoluteError": 3.666667
+        }
+      ]
+    },
+    "recommendations": {
+      "targetProduct": "Motor de Popa 1949",
+      "targetCustomers": 397,
+      "method": "Similaridade do cosseno sobre interações binárias cliente-produto",
+      "items": [
+        {
+          "rank": 1,
+          "product": "Motor de Popa 5331",
+          "similarity": 0.25655258,
+          "commonCustomers": 106,
+          "productCustomers": 430
+        },
+        {
+          "rank": 2,
+          "product": "Cabo Náutico 2105",
+          "similarity": 0.25623873,
+          "commonCustomers": 103,
+          "productCustomers": 407
+        },
+        {
+          "rank": 3,
+          "product": "Vela Mestra 1913",
+          "similarity": 0.25578459,
+          "commonCustomers": 100,
+          "productCustomers": 385
+        },
+        {
+          "rank": 4,
+          "product": "Cabo Náutico 9048",
+          "similarity": 0.2393323,
+          "commonCustomers": 99,
+          "productCustomers": 431
+        },
+        {
+          "rank": 5,
+          "product": "GPS Plotter 6249",
+          "similarity": 0.23774366,
+          "commonCustomers": 98,
+          "productCustomers": 428
+        }
+      ]
+    }
+  },
+  "quality": {
+    "checks": [
+      {
+        "id": "csv-inventory",
+        "label": "Inventário CSV",
+        "status": "pass",
+        "value": 24,
+        "detail": "433.424 registros lidos nas fontes."
+      },
+      {
+        "id": "required-sources",
+        "label": "Fontes analíticas",
+        "status": "pass",
+        "value": 6,
+        "detail": "Todas as fontes necessárias às métricas estão presentes."
+      },
+      {
+        "id": "primary-keys",
+        "label": "Chaves principais",
+        "status": "pass",
+        "value": 0,
+        "detail": "Nenhum ID nulo ou duplicado nas seis fontes analíticas."
+      },
+      {
+        "id": "foreign-keys",
+        "label": "Referências entre fontes",
+        "status": "pass",
+        "value": 0,
+        "detail": "Nenhuma referência órfã na cadeia pedido-item-produto-categoria."
+      },
+      {
+        "id": "core-completeness",
+        "label": "Completude central",
+        "status": "pass",
+        "value": 0,
+        "detail": "Sem ausências em data, status, canal ou total de pedidos."
+      },
+      {
+        "id": "order-arithmetic",
+        "label": "Coerência do total",
+        "status": "pass",
+        "value": 0,
+        "detail": "Diferenças acima de R$ 0,01 em subtotal - desconto = total."
+      },
+      {
+        "id": "privacy",
+        "label": "Privacidade da saída",
+        "status": "pass",
+        "value": 0,
+        "detail": "Sem nomes de clientes, contatos, documentos ou endereços."
+      }
+    ],
+    "sources": [
+      {
+        "file": "addresses.csv",
+        "rows": 3998,
+        "columns": 12,
+        "usedForMetrics": false
+      },
+      {
+        "file": "attributes.csv",
+        "rows": 8,
+        "columns": 3,
+        "usedForMetrics": false
+      },
+      {
+        "file": "brands.csv",
+        "rows": 12,
+        "columns": 6,
+        "usedForMetrics": false
+      },
+      {
+        "file": "categories.csv",
+        "rows": 14,
+        "columns": 7,
+        "usedForMetrics": true
+      },
+      {
+        "file": "customers.csv",
+        "rows": 2000,
+        "columns": 11,
+        "usedForMetrics": true
+      },
+      {
+        "file": "employees.csv",
+        "rows": 15,
+        "columns": 11,
+        "usedForMetrics": false
+      },
+      {
+        "file": "fiscal_invoices.csv",
+        "rows": 34365,
+        "columns": 11,
+        "usedForMetrics": false
+      },
+      {
+        "file": "goods_receipt_items.csv",
+        "rows": 4733,
+        "columns": 4,
+        "usedForMetrics": false
+      },
+      {
+        "file": "goods_receipts.csv",
+        "rows": 1548,
+        "columns": 6,
+        "usedForMetrics": false
+      },
+      {
+        "file": "locations.csv",
+        "rows": 6,
+        "columns": 14,
+        "usedForMetrics": false
+      },
+      {
+        "file": "order_items.csv",
+        "rows": 147320,
+        "columns": 8,
+        "usedForMetrics": true
+      },
+      {
+        "file": "orders.csv",
+        "rows": 48998,
+        "columns": 13,
+        "usedForMetrics": true
+      },
+      {
+        "file": "payments.csv",
+        "rows": 53546,
+        "columns": 9,
+        "usedForMetrics": false
+      },
+      {
+        "file": "product_suppliers.csv",
+        "rows": 1520,
+        "columns": 8,
+        "usedForMetrics": false
+      },
+      {
+        "file": "product_variants.csv",
+        "rows": 1009,
+        "columns": 12,
+        "usedForMetrics": true
+      },
+      {
+        "file": "products.csv",
+        "rows": 500,
+        "columns": 10,
+        "usedForMetrics": true
+      },
+      {
+        "file": "purchase_order_items.csv",
+        "rows": 6059,
+        "columns": 6,
+        "usedForMetrics": false
+      },
+      {
+        "file": "purchase_orders.csv",
+        "rows": 2000,
+        "columns": 13,
+        "usedForMetrics": false
+      },
+      {
+        "file": "return_items.csv",
+        "rows": 1384,
+        "columns": 7,
+        "usedForMetrics": false
+      },
+      {
+        "file": "returns.csv",
+        "rows": 980,
+        "columns": 10,
+        "usedForMetrics": false
+      },
+      {
+        "file": "stock_levels.csv",
+        "rows": 6054,
+        "columns": 5,
+        "usedForMetrics": false
+      },
+      {
+        "file": "stock_movements.csv",
+        "rows": 115312,
+        "columns": 11,
+        "usedForMetrics": false
+      },
+      {
+        "file": "suppliers.csv",
+        "rows": 25,
+        "columns": 12,
+        "usedForMetrics": false
+      },
+      {
+        "file": "variant_attribute_values.csv",
+        "rows": 2018,
+        "columns": 3,
+        "usedForMetrics": false
+      }
+    ],
+    "pipeline": [
+      {
+        "step": 1,
+        "label": "Descobrir",
+        "status": "complete",
+        "detail": "24 CSVs inventariados na raiz do projeto."
+      },
+      {
+        "step": 2,
+        "label": "Validar",
+        "status": "complete",
+        "detail": "Chaves, completude, aritmética e relacionamentos conferidos."
+      },
+      {
+        "step": 3,
+        "label": "Agregar",
+        "status": "complete",
+        "detail": "48.998 pedidos transformados sem expor o grão transacional."
+      },
+      {
+        "step": 4,
+        "label": "Modelar",
+        "status": "complete",
+        "detail": "Regras validadas das questões 4, 5, 6 e 7 reproduzidas."
+      },
+      {
+        "step": 5,
+        "label": "Publicar",
+        "status": "complete",
+        "detail": "Contrato JSON agregado e anonimizado para consumo local."
+      }
+    ]
+  }
+}

@@ -1,0 +1,6 @@
+rank,product_id,similarity,product_name,common_customers,product_customers,target_customers
+1,389,0.25655258,Motor de Popa 5331,106,430,397
+2,295,0.25623873,Cabo Náutico 2105,103,407,397
+3,75,0.25578459,Vela Mestra 1913,100,385,397
+4,337,0.23933230,Cabo Náutico 9048,99,431,397
+5,55,0.23774366,GPS Plotter 6249,98,428,397
