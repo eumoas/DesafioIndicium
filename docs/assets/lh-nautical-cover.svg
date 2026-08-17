@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="620" viewBox="0 0 1600 620" role="img" aria-labelledby="title desc">
+  <title id="title">LH Nautical — Da base à decisão</title>
+  <desc id="desc">Capa do projeto analítico desenvolvido por Miriam Oliveira de Aguiar Sobral</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#05073f"/>
+      <stop offset="0.58" stop-color="#0a1455"/>
+      <stop offset="1" stop-color="#101f69"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#aee7e9"/>
+      <stop offset="1" stop-color="#6d70ff"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#8c9cd8" stroke-opacity="0.10" stroke-width="1"/>
+      <circle cx="0" cy="0" r="1.5" fill="#b9c9ff" fill-opacity="0.24"/>
+    </pattern>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="14" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="620" rx="28" fill="url(#background)"/>
+  <rect width="1600" height="620" rx="28" fill="url(#grid)"/>
+  <circle cx="1420" cy="72" r="260" fill="#245bf3" fill-opacity="0.12"/>
+  <circle cx="1480" cy="590" r="330" fill="#6d70ff" fill-opacity="0.08"/>
+  <path d="M1050 0h550v620h-290c-70-88-110-182-110-282 0-127-52-238-150-338Z" fill="#ffffff" fill-opacity="0.025"/>
+
+  <g transform="translate(142 142)">
+    <circle cx="154" cy="154" r="115" fill="#091153" stroke="#aee7e9" stroke-opacity="0.48" stroke-width="2"/>
+    <circle cx="154" cy="154" r="88" fill="none" stroke="#aee7e9" stroke-opacity="0.48" stroke-width="2"/>
+    <circle cx="154" cy="154" r="57" fill="none" stroke="#bcbcff" stroke-opacity="0.24"/>
+    <path d="M154 14v47M154 247v47M14 154h47M247 154h47" stroke="#bcbcff" stroke-width="3" stroke-linecap="round"/>
+    <path d="M154 32l8 15h-16Z M154 276l8-15h-16Z M32 154l15-8v16Z M276 154l-15-8v16Z" fill="#aee7e9" fill-opacity="0.8"/>
+    <path d="m191 85-22 94-91 43 45-91 68-46Z" fill="#245bf3" stroke="#f8fbff" stroke-width="4" stroke-linejoin="round" filter="url(#glow)"/>
+    <circle cx="154" cy="154" r="10" fill="#f8fbff"/>
+    <text x="154" y="350" fill="#aee7e9" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700" letter-spacing="5" text-anchor="middle">INTELLIGENCE DECK</text>
+  </g>
+
+  <g transform="translate(510 132)" font-family="Arial, Helvetica, sans-serif">
+    <text x="0" y="28" fill="#aee7e9" font-size="16" font-weight="700" letter-spacing="6">DESAFIO INDICIUM · 2026</text>
+    <text x="0" y="124" fill="#ffffff" font-size="78" font-weight="700" letter-spacing="-2">LH Nautical</text>
+    <rect x="0" y="156" width="510" height="5" rx="2.5" fill="url(#accent)"/>
+    <text x="0" y="222" fill="#eef2ff" font-size="35" font-weight="400" letter-spacing="1">Da base à decisão</text>
+    <text x="0" y="272" fill="#b6c0e4" font-size="20">Engenharia de dados · Analytics · Machine Learning · Data Storytelling</text>
+
+    <g transform="translate(0 330)">
+      <rect width="182" height="70" rx="14" fill="#ffffff" fill-opacity="0.07" stroke="#ffffff" stroke-opacity="0.12"/>
+      <text x="20" y="29" fill="#aee7e9" font-size="13" font-weight="700" letter-spacing="2">FONTES</text>
+      <text x="20" y="55" fill="#ffffff" font-size="21" font-weight="700">24 CSVs</text>
+    </g>
+    <g transform="translate(198 330)">
+      <rect width="214" height="70" rx="14" fill="#ffffff" fill-opacity="0.07" stroke="#ffffff" stroke-opacity="0.12"/>
+      <text x="20" y="29" fill="#aee7e9" font-size="13" font-weight="700" letter-spacing="2">REGISTROS</text>
+      <text x="20" y="55" fill="#ffffff" font-size="21" font-weight="700">433.424</text>
+    </g>
+    <g transform="translate(428 330)">
+      <rect width="250" height="70" rx="14" fill="#ffffff" fill-opacity="0.07" stroke="#ffffff" stroke-opacity="0.12"/>
+      <text x="20" y="29" fill="#aee7e9" font-size="13" font-weight="700" letter-spacing="2">ENTREGA</text>
+      <text x="20" y="55" fill="#ffffff" font-size="21" font-weight="700">Dashboard + PDF</text>
+    </g>
+  </g>
+
+  <g transform="translate(510 570)" font-family="Arial, Helvetica, sans-serif">
+    <circle cx="6" cy="-7" r="6" fill="#aee7e9"/>
+    <text x="24" y="0" fill="#c8d1ee" font-size="16">Miriam Oliveira de Aguiar Sobral · Cientista de Dados</text>
+  </g>
+</svg>

@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/assets/lh-nautical-cover.svg" alt="LH Nautical — Da base à decisão" width="100%">
+</p>
+
 # Desafio Indicium — LH Nautical
 
 Solução de ponta a ponta para o desafio fictício da LH Nautical, cobrindo
@@ -16,6 +20,19 @@ negócio não confirmadas permanecem explícitas.
 > **Dados do desafio:** os 24 CSVs da raiz são integralmente **sintéticos e
 > fictícios**. Eles não representam pessoas, empresas ou operações reais e são
 > versionados neste repositório para permitir a reprodução completa da análise.
+
+## Insights em 30 segundos
+
+| Perspectiva | O que os dados mostram | Implicação para a decisão |
+|---|---|---|
+| **Segmentação** | 1.971 de 2.000 clientes (98,55%) passam pelo corte de “elite” | O critério de 13 categorias quase não segmenta; recência, frequência mínima e margem tornariam o grupo mais acionável. |
+| **Canais** | E-commerce representa 70,19% do valor bruto registrado e 70,09% dos pedidos | Escala digital é clara, mas investimento deve considerar margem, devoluções e custo de servir. |
+| **Operação POS** | Quinta-feira tem a menor média, apenas 0,29% abaixo de domingo | A diferença não sustenta fechar lojas; é necessário analisar loja-dia, custos e migração da demanda. |
+| **Previsão** | O baseline previu 148,67 unidades contra 207 realizadas no trimestre | A subestimação de 28,18% torna a média móvel uma referência, não uma ordem automática de compra. |
+| **Recomendação** | “Motor de Popa 5331” é o item mais similar; a primeira defensa aparece na 15ª posição | Afinidade de público não equivale a complementaridade; o cross-sell precisa de regra comercial e teste controlado. |
+| **Confiança** | As 24 fontes são estruturalmente consistentes, mas status, moeda e corte não estão contratados | A base serve à exploração; KPIs financeiros ainda precisam de um gate de governança. |
+
+➡️ [Veja os insights completos, decisões e ressalvas por persona.](#insights-prioritários)
 
 ## Visão do desafio
 
