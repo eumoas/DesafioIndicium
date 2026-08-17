@@ -17,8 +17,8 @@ O repositório prioriza rastreabilidade e interpretação responsável. Os núme
 publicados seguem literalmente as regras disponíveis, enquanto hipóteses de
 negócio não confirmadas permanecem explícitas.
 
-> **Dados do desafio:** os 24 CSVs da raiz são integralmente **sintéticos e
-> fictícios**. Eles não representam pessoas, empresas ou operações reais e são
+> **ATENÇÃO: Considerando a A Lei Geral de Proteção de Dados Pessoais (LGPD), Lei n° 13.709, de 14/08/2018, importante salientar que este trabalho utiliza: 
+> Dados sintéticos e fictícios:** os 24 CSVs da raiz são integralmente. Eles não representam pessoas, empresas ou operações reais e são
 > versionados neste repositório para permitir a reprodução completa da análise.
 
 ## Insights em 30 segundos
