@@ -189,8 +189,11 @@ Arquivos entregues:
 Execução a partir da raiz do projeto:
 
 ```bash
-python3 scripts/schema.py . -o schema.sql
+python3 scripts/schema.py data/raw -o schema.sql
 ```
+
+`data/raw` é a área imutável das fontes sintéticas. O arquivo derivado
+`schema.sql` permanece na raiz para facilitar sua identificação como entregável.
 
 Saída observada:
 

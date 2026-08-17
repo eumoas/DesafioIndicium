@@ -17,9 +17,12 @@ O repositório prioriza rastreabilidade e interpretação responsável. Os núme
 publicados seguem literalmente as regras disponíveis, enquanto hipóteses de
 negócio não confirmadas permanecem explícitas.
 
-> **ATENÇÃO: Considerando a A Lei Geral de Proteção de Dados Pessoais (LGPD), Lei n° 13.709, de 14/08/2018, importante salientar que este trabalho utiliza: 
-> Dados sintéticos e fictícios:** os 24 CSVs da raiz são integralmente. Eles não representam pessoas, empresas ou operações reais e são
-> versionados neste repositório para permitir a reprodução completa da análise.
+> **Privacidade e LGPD:** em atenção às boas práticas associadas à Lei Geral de
+> Proteção de Dados Pessoais (Lei nº 13.709/2018), este trabalho utiliza
+> exclusivamente dados **sintéticos e fictícios**. Os 24 CSVs em
+> [`data/raw/`](data/raw/) não representam pessoas, empresas ou operações reais e
+> são versionados para permitir a reprodução da análise. O inventário e a política
+> de uso estão em [`data/README.md`](data/README.md).
 
 ## Insights em 30 segundos
 
@@ -277,7 +280,7 @@ Estas premissas devem acompanhar qualquer apresentação dos resultados:
 ## Arquitetura e fluxo de dados
 
 ```text
-24 CSVs brutos
+data/raw/ (24 CSVs brutos)
     |
     +-- scripts/schema.py --> schema.sql
     |                           |
@@ -301,7 +304,9 @@ depender de uma instância de banco durante a apresentação.
 
 ```text
 .
-├── *.csv                              # 24 fontes sintéticas versionadas
+├── data/
+│   ├── README.md                      # inventário, origem e cautelas de uso
+│   └── raw/                           # 24 fontes sintéticas, sem tratamento
 ├── Enunciado.md                       # contexto recebido
 ├── docs/                              # decisões, resultados e autocrítica
 │   ├── 01_eda_orders.md
@@ -352,7 +357,7 @@ As dependências declaradas são pandas, psycopg2-binary e ReportLab.
 ### 2. Gerar o schema
 
 ```bash
-python3 scripts/schema.py . -o schema.sql
+python3 scripts/schema.py data/raw -o schema.sql
 ```
 
 Saída esperada para este snapshot: 24 tabelas e 433.424 registros analisados,
@@ -365,7 +370,7 @@ Defina a conexão somente no ambiente; não grave credenciais no repositório:
 ```bash
 export LH_NAUTICAL_DATABASE_URL='postgresql://USUARIO:SENHA@HOST:5432/BANCO'
 psql "$LH_NAUTICAL_DATABASE_URL" -v ON_ERROR_STOP=1 -f schema.sql
-python3 scripts/load.py .
+python3 scripts/load.py data/raw
 ```
 
 O carregador também aceita variáveis padrão `PG*` e `--db-schema`. Evite
@@ -386,8 +391,8 @@ psql "$LH_NAUTICAL_DATABASE_URL" -v ON_ERROR_STOP=1 -f sql/questao_5.sql
 ### 5. Recalcular previsão e recomendação
 
 ```bash
-python3 scripts/questao_6_1.py .
-python3 scripts/questao_7_1.py .
+python3 scripts/questao_6_1.py data/raw --output-directory outputs
+python3 scripts/questao_7_1.py data/raw --output-directory outputs
 ```
 
 Esses comandos atualizam os arquivos técnicos em [outputs/](outputs/).
@@ -397,7 +402,7 @@ Esses comandos atualizam os arquivos técnicos em [outputs/](outputs/).
 O JSON deve ser atualizado antes do PDF:
 
 ```bash
-python3 scripts/build_dashboard_data.py .
+python3 scripts/build_dashboard_data.py data/raw --output dashboard/public/data/dashboard.json
 python3 scripts/generate_executive_report.py
 ```
 
@@ -454,7 +459,7 @@ frontend e não entram na contagem de 41 testes Python.
 | Entregável | Arquivo |
 |---|---|
 | Enunciado recebido | [Enunciado.md](Enunciado.md) |
-| Fontes sintéticas | 24 arquivos CSV versionados na raiz, incluindo [orders.csv](orders.csv), [order_items.csv](order_items.csv), [products.csv](products.csv) e [customers.csv](customers.csv) |
+| Fontes sintéticas | [Inventário dos 24 CSVs](data/README.md), incluindo [orders.csv](data/raw/orders.csv), [order_items.csv](data/raw/order_items.csv), [products.csv](data/raw/products.csv) e [customers.csv](data/raw/customers.csv) |
 | Relatório da Q1 | [docs/01_eda_orders.md](docs/01_eda_orders.md) |
 | Schema inferido | [schema.sql](schema.sql) |
 | Relatório da Q2 | [docs/02_schema.md](docs/02_schema.md) |

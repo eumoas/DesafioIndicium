@@ -40,6 +40,8 @@ REQUIRED_FILES = {
     "product_variants.csv",
     "products.csv",
 }
+DEFAULT_INPUT_DIRECTORY = Path("data") / "raw"
+DEFAULT_OUTPUT_PATH = Path("dashboard") / "public" / "data" / "dashboard.json"
 
 
 class DashboardDataError(Exception):
@@ -87,7 +89,7 @@ def _format_decimal_pt(value: Any, digits: int = 2) -> str:
 
 
 def discover_source_profiles(input_directory: Path) -> list[SourceProfile]:
-    """Lê a estrutura e conta registros de todos os CSVs da raiz."""
+    """Lê a estrutura e conta registros de todos os CSVs de origem."""
 
     if not input_directory.is_dir():
         raise DashboardDataError(f"diretório não encontrado: {input_directory}")
@@ -775,7 +777,7 @@ def build_quality(
             "step": 1,
             "label": "Descobrir",
             "status": "complete",
-            "detail": f"{len(profiles)} CSVs inventariados na raiz do projeto.",
+            "detail": f"{len(profiles)} CSVs de origem inventariados.",
         },
         {
             "step": 2,
@@ -1081,35 +1083,30 @@ def parse_arguments(arguments: Optional[Sequence[str]] = None) -> argparse.Names
         "input_directory",
         nargs="?",
         type=Path,
-        default=Path("."),
-        help="diretório que contém os 24 CSVs (padrão: diretório atual)",
+        default=DEFAULT_INPUT_DIRECTORY,
+        help="diretório que contém os 24 CSVs (padrão: data/raw)",
     )
     parser.add_argument(
         "--output",
         type=Path,
-        help=(
-            "arquivo de saída (padrão: "
-            "<input_directory>/dashboard/public/data/dashboard.json)"
-        ),
+        default=DEFAULT_OUTPUT_PATH,
+        help="arquivo de saída (padrão: dashboard/public/data/dashboard.json)",
     )
     return parser.parse_args(arguments)
 
 
 def main(arguments: Optional[Sequence[str]] = None) -> int:
     options = parse_arguments(arguments)
-    output_path = options.output or (
-        options.input_directory / "dashboard" / "public" / "data" / "dashboard.json"
-    )
     try:
         dashboard_data = build_dashboard_data(options.input_directory)
-        write_dashboard_data(output_path, dashboard_data)
+        write_dashboard_data(options.output, dashboard_data)
     except DashboardDataError as error:
         print(f"Erro: {error}", file=sys.stderr)
         return 1
 
     metadata = dashboard_data["metadata"]
     print(
-        f"Dashboard gerado em {output_path}: "
+        f"Dashboard gerado em {options.output}: "
         f"{metadata['sourceFiles']} CSVs e "
         f"{metadata['totalRecords']} registros agregados."
     )

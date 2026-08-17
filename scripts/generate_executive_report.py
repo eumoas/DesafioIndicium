@@ -2,7 +2,7 @@
 """Gera o resumo executivo em PDF da LH Nautical.
 
 O gerador prioriza ``dashboard/public/data/dashboard.json`` quando disponível e
-mantém um fallback reproduzível a partir dos CSVs da raiz. A saída contém apenas
+mantém um fallback reproduzível a partir dos CSVs em ``data/raw``. A saída contém apenas
 agregados; clientes são apresentados por aliases de ranking, sem PII.
 """
 
@@ -190,19 +190,20 @@ def count_csv_records(directory: Path) -> Tuple[int, int]:
 def build_fallback_data(root: Path) -> Dict[str, Any]:
     """Calcula todos os agregados necessários sem depender do dashboard."""
 
+    raw_data_directory = root / "data" / "raw"
     required = [
-        root / "orders.csv",
-        root / "order_items.csv",
-        root / "product_variants.csv",
-        root / "products.csv",
-        root / "categories.csv",
+        raw_data_directory / "orders.csv",
+        raw_data_directory / "order_items.csv",
+        raw_data_directory / "product_variants.csv",
+        raw_data_directory / "products.csv",
+        raw_data_directory / "categories.csv",
     ]
     missing = [str(path) for path in required if not path.is_file()]
     if missing:
         raise FileNotFoundError("fontes obrigatórias ausentes: " + ", ".join(missing))
 
     orders_df = pd.read_csv(
-        root / "orders.csv",
+        raw_data_directory / "orders.csv",
         usecols=[
             "id",
             "order_number",
@@ -219,17 +220,17 @@ def build_fallback_data(root: Path) -> Dict[str, Any]:
         parse_dates=["placed_at", "created_at"],
     )
     items_df = pd.read_csv(
-        root / "order_items.csv",
+        raw_data_directory / "order_items.csv",
         usecols=["id", "order_id", "product_variant_id", "quantity"],
     ).rename(columns={"id": "order_item_id"})
     variants_df = pd.read_csv(
-        root / "product_variants.csv", usecols=["id", "product_id"]
+        raw_data_directory / "product_variants.csv", usecols=["id", "product_id"]
     ).rename(columns={"id": "product_variant_id"})
     products_df = pd.read_csv(
-        root / "products.csv", usecols=["id", "name", "category_id"]
+        raw_data_directory / "products.csv", usecols=["id", "name", "category_id"]
     ).rename(columns={"id": "product_id", "name": "product_name"})
     categories_df = pd.read_csv(
-        root / "categories.csv", usecols=["id", "name"]
+        raw_data_directory / "categories.csv", usecols=["id", "name"]
     ).rename(columns={"id": "category_id", "name": "category_name"})
 
     orders_df["month"] = orders_df["placed_at"].dt.to_period("M").astype(str)
@@ -361,7 +362,7 @@ def build_fallback_data(root: Path) -> Dict[str, Any]:
                 }
             )
 
-    csv_count, csv_records = count_csv_records(root)
+    csv_count, csv_records = count_csv_records(raw_data_directory)
     total_orders = len(orders_df)
     value_total = float(orders_df["total"].sum())
     semantic_status_orders = int(orders_df["status"].isin(["cancelled", "draft"]).sum())

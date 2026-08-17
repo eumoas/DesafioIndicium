@@ -274,8 +274,11 @@ Execução a partir da raiz do projeto:
 
 ```bash
 python3 -m pip install -r requirements.txt
-python3 scripts/questao_6_1.py .
+python3 scripts/questao_6_1.py data/raw --output-directory outputs
 ```
+
+As fontes permanecem inalteradas em `data/raw`; os três artefatos gerados são
+gravados separadamente em `outputs/`.
 
 O programa gera três arquivos:
 

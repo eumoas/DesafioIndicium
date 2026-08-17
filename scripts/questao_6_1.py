@@ -13,6 +13,8 @@ import pandas as pd
 
 
 TARGET_PRODUCT = "Bússola de Bordo 702"
+DEFAULT_INPUT_DIRECTORY = Path("data") / "raw"
+DEFAULT_OUTPUT_DIRECTORY = Path("outputs")
 TRAIN_END_MONTH = pd.Timestamp("2025-12-01")
 TEST_START_MONTH = pd.Timestamp("2026-01-01")
 TEST_END_MONTH = pd.Timestamp("2026-03-01")
@@ -282,13 +284,14 @@ def parse_arguments(arguments: Optional[Sequence[str]] = None) -> argparse.Names
         "input_directory",
         nargs="?",
         type=Path,
-        default=Path("."),
-        help="diretório com os quatro CSVs (padrão: diretório atual)",
+        default=DEFAULT_INPUT_DIRECTORY,
+        help="diretório com os quatro CSVs (padrão: data/raw)",
     )
     parser.add_argument(
         "--output-directory",
         type=Path,
-        help="diretório de saída (padrão: <input_directory>/outputs)",
+        default=DEFAULT_OUTPUT_DIRECTORY,
+        help="diretório de saída (padrão: outputs)",
     )
     parser.add_argument(
         "--target-product",
@@ -300,7 +303,6 @@ def parse_arguments(arguments: Optional[Sequence[str]] = None) -> argparse.Names
 
 def main(arguments: Optional[Sequence[str]] = None) -> int:
     options = parse_arguments(arguments)
-    output_directory = options.output_directory or options.input_directory / "outputs"
 
     try:
         products, variants, orders, order_items = read_sources(options.input_directory)
@@ -321,7 +323,7 @@ def main(arguments: Optional[Sequence[str]] = None) -> int:
         train, test = split_train_test(monthly_series)
         forecasts = forecast_walk_forward(train, test)
         mae = mean_absolute_error(forecasts)
-        write_outputs(output_directory, unified, monthly_series, forecasts)
+        write_outputs(options.output_directory, unified, monthly_series, forecasts)
 
     except (ForecastError, OSError, ValueError, pd.errors.ParserError) as error:
         print(f"Erro: {error}", file=sys.stderr)
@@ -338,7 +340,7 @@ def main(arguments: Optional[Sequence[str]] = None) -> int:
     display["month"] = display["month"].dt.strftime("%Y-%m")
     print(display.to_string(index=False, float_format=lambda value: f"{value:.2f}"))
     print(f"MAE: {mae:.2f} unidades")
-    print(f"Arquivos gerados em: {output_directory}")
+    print(f"Arquivos gerados em: {options.output_directory}")
     return 0
 
 

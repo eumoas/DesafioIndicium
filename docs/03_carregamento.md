@@ -278,13 +278,13 @@ por variável de ambiente:
 
 ```bash
 export LH_NAUTICAL_DATABASE_URL='postgresql://usuario:senha@host:5432/banco'
-python3 scripts/load.py .
+python3 scripts/load.py data/raw
 ```
 
 Outro schema pode ser selecionado:
 
 ```bash
-python3 scripts/load.py . --db-schema lh_nautical
+python3 scripts/load.py data/raw --db-schema lh_nautical
 ```
 
 Também é possível utilizar as variáveis padrão da libpq (`PGHOST`, `PGPORT`,
@@ -296,8 +296,11 @@ Por padrão, qualquer tabela não vazia cancela o lote. Para substituir
 deliberadamente o conteúdo das tabelas alvo:
 
 ```bash
-python3 scripts/load.py . --replace
+python3 scripts/load.py data/raw --replace
 ```
+
+O carregador lê somente os arquivos diretamente em `data/raw`. Resultados
+derivados em `outputs/` não participam da carga.
 
 `--replace` apaga os dados anteriores se houver sucesso. Se qualquer parte da
 nova carga falhar antes do commit, o `TRUNCATE` também sofre rollback e o estado

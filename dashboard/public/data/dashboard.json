@@ -1,7 +1,7 @@
 {
   "metadata": {
     "title": "LH Nautical — Painel executivo",
-    "generatedAt": "2026-08-17T01:01:57+00:00",
+    "generatedAt": "2026-08-17T02:37:03+00:00",
     "sourcePeriod": {
       "start": "2020-01-01",
       "end": "2026-12-31",
@@ -1236,7 +1236,7 @@
         "step": 1,
         "label": "Descobrir",
         "status": "complete",
-        "detail": "24 CSVs inventariados na raiz do projeto."
+        "detail": "24 CSVs de origem inventariados."
       },
       {
         "step": 2,

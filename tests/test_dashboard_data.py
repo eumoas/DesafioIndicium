@@ -6,6 +6,7 @@ from pathlib import Path
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
+RAW_DATA_DIRECTORY = PROJECT_ROOT / "data" / "raw"
 sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
 
 import build_dashboard_data as dashboard  # noqa: E402
@@ -14,7 +15,7 @@ import build_dashboard_data as dashboard  # noqa: E402
 class DashboardDataIntegrationTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.data = dashboard.build_dashboard_data(PROJECT_ROOT)
+        cls.data = dashboard.build_dashboard_data(RAW_DATA_DIRECTORY)
 
     def card(self, card_id):
         return next(

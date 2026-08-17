@@ -8,7 +8,7 @@ desafio sob três perspectivas: crescimento, operação e confiança nos dados.
 ## Arquitetura
 
 ```text
-CSVs de origem
+data/raw/ (CSVs de origem)
       ↓
 scripts/build_dashboard_data.py
       ↓
@@ -26,8 +26,11 @@ identificadores técnicos necessários para a análise.
 Na raiz do projeto:
 
 ```bash
-python3 scripts/build_dashboard_data.py
+python3 scripts/build_dashboard_data.py data/raw --output dashboard/public/data/dashboard.json
 ```
+
+Esse comando mantém as fontes brutas separadas do contrato agregado consumido
+pelo navegador.
 
 ## Executar localmente
 

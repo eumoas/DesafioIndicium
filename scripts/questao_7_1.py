@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import argparse
 import sys
 from pathlib import Path
 from typing import Optional, Sequence, Tuple
@@ -12,6 +13,8 @@ import pandas as pd
 
 TARGET_PRODUCT = "Motor de Popa 1949"
 TOP_N = 5
+DEFAULT_INPUT_DIRECTORY = Path("data") / "raw"
+DEFAULT_OUTPUT_DIRECTORY = Path("outputs")
 
 
 class RecommendationError(Exception):
@@ -185,23 +188,41 @@ def write_outputs(
     )
 
 
+def parse_arguments(arguments: Optional[Sequence[str]] = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="Gera um ranking de produtos com comportamento de compra similar."
+    )
+    parser.add_argument(
+        "input_directory",
+        nargs="?",
+        type=Path,
+        default=DEFAULT_INPUT_DIRECTORY,
+        help="diretório com os quatro CSVs (padrão: data/raw)",
+    )
+    parser.add_argument(
+        "--output-directory",
+        type=Path,
+        default=DEFAULT_OUTPUT_DIRECTORY,
+        help="diretório de saída (padrão: outputs)",
+    )
+    return parser.parse_args(arguments)
+
+
 def main(arguments: Optional[Sequence[str]] = None) -> int:
-    arguments = list(arguments or sys.argv[1:])
-    input_directory = Path(arguments[0]) if arguments else Path(".")
-    output_directory = input_directory / "outputs"
+    options = parse_arguments(arguments)
 
     try:
-        products, variants, orders, items = read_sources(input_directory)
+        products, variants, orders, items = read_sources(options.input_directory)
         matrix = build_interaction_matrix(products, variants, orders, items)
         similarity = calculate_product_similarity(matrix)
         ranking = rank_similar_products(products, matrix, similarity)
-        write_outputs(output_directory, matrix, similarity, ranking)
+        write_outputs(options.output_directory, matrix, similarity, ranking)
     except (RecommendationError, OSError, ValueError, pd.errors.ParserError) as error:
         print(f"Erro: {error}", file=sys.stderr)
         return 1
 
     print(ranking.to_string(index=False, float_format=lambda value: f"{value:.6f}"))
-    print(f"Arquivos gerados em: {output_directory}")
+    print(f"Arquivos gerados em: {options.output_directory}")
     return 0
 
 

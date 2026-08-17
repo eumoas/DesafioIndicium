@@ -142,7 +142,7 @@ linkado no início deste documento.
 Execute a partir da raiz do projeto para manter JSON e PDF sincronizados:
 
 ```bash
-python3 scripts/build_dashboard_data.py
+python3 scripts/build_dashboard_data.py data/raw --output dashboard/public/data/dashboard.json
 python3 scripts/generate_executive_report.py
 ```
 
