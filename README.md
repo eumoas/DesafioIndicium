@@ -43,6 +43,65 @@ O dashboard organiza a leitura em quatro perspectivas: **Ponte de Comando**,
 **Marina**, **Sr. Almir** e **Gabriel**. O roteiro de apresentação está em
 [docs/08_dashboard_e_apresentacao.md](docs/08_dashboard_e_apresentacao.md).
 
+## Insights prioritários
+
+Os resultados abaixo não são apenas métricas descritivas. Cada leitura conecta
+uma evidência observada a uma decisão possível e mantém explícito o que ainda
+precisa ser confirmado.
+
+| Persona | Evidência | Insight | Decisão sugerida | Ressalva |
+|---|---|---|---|---|
+| **Marina** | 1.971 de 2.000 clientes (98,55%) passam pelo corte de 13 categorias | O critério chamado de “elite” quase não segmenta a base; o ticket médio acaba dominando o ranking | Redesenhar o segmento com recência, frequência mínima, margem e uma janela temporal | O ranking atual cumpre a regra do desafio, mas não demonstra fidelidade sozinho |
+| **Marina** | E-commerce concentra 70,19% do valor bruto registrado e 70,09% dos pedidos | O canal digital domina o snapshot em escala, não necessariamente em rentabilidade | Comparar margem, custo de servir, devoluções e recompra por canal antes de direcionar investimento | `orders.total` não representa receita reconhecida nem lucro |
+| **Marina** | Hélices lidera o consumo do top 10, com 492 unidades; a recomendação líder para o motor é outro motor | Existem sinais diferentes para segmentação, afinidade e oferta complementar | Testar ofertas de Hélices no segmento e validar cross-sell por experimento controlado | Similaridade de cosseno mede público em comum; a primeira defensa aparece somente na 15ª posição |
+| **Sr. Almir** | Quinta-feira tem a menor média POS, mas fica apenas 461,81 abaixo de domingo (0,29%) | O ranking semanal é descritivo, porém a diferença é pequena demais para justificar fechamento de lojas | Analisar loja-dia, margem, custo de abertura, feriados e migração de demanda | A visão atual agrega toda a rede e não estima efeito causal do fechamento |
+| **Sr. Almir** | O baseline previu 148,67 unidades diante de 207 realizadas, déficit de 58,33 (28,18%) | A média móvel é útil como referência, mas subestimou sistematicamente o trimestre | Manter o baseline como controle e testar modelos com estoque, ruptura, promoção e lead time | Três meses de teste e MAE de 19,44 não sustentam compra automática |
+| **Gabriel** | As 24 fontes somam 433.424 registros e as relações analíticas não apresentaram órfãos | A estrutura é suficiente para exploração reproduzível | Versionar contratos, checks e reconciliações no pipeline de ingestão | Consistência estrutural não resolve regras de negócio |
+| **Gabriel** | O snapshot inclui todos os status e alcança 31/12/2026, além da data de geração | Status elegíveis, moeda, reconhecimento e corte são o principal risco de interpretação | Criar um gate de governança antes de certificar KPIs financeiros | Alterar essas regras muda materialmente rankings, previsão e recomendação |
+
+### Ordem de ação recomendada
+
+1. **Governança primeiro:** aprovar status, moeda, semântica de `total` e data
+   oficial de corte.
+2. **Decisão comercial testável:** redesenhar o grupo elite e executar um piloto
+   de cross-sell com grupo de controle.
+3. **Operação antes da automação:** avaliar POS por unidade e evoluir a previsão
+   incorporando disponibilidade, ruptura e prazo de reposição.
+
+### Cultura data-driven na prática
+
+Nesta entrega, cultura data-driven não significa substituir julgamento humano
+por um dashboard. Significa tornar a decisão **explicável, reproduzível e
+mensurável**, inclusive quando a evidência ainda não é suficiente.
+
+```text
+Pergunta de negócio
+        ↓
+Contrato da métrica e premissas
+        ↓
+Dado validado e rastreável
+        ↓
+Análise com incertezas explícitas
+        ↓
+Decisão ou experimento controlado
+        ↓
+Mensuração do resultado e aprendizado
+```
+
+| Princípio | Como foi materializado |
+|---|---|
+| Começar pela decisão | Cada visão responde perguntas próprias de Marina, Sr. Almir e Gabriel |
+| Definir antes de medir | Status, granularidade, calendário, janela temporal e desempates são documentados |
+| Rastrear a evidência | CSV → script/SQL → agregado → dashboard/PDF permanece reproduzível |
+| Não esconder incerteza | Valor registrado não é chamado de receita; baseline não vira ordem de compra; similaridade não vira causalidade |
+| Democratizar com segurança | Personas exploram métricas e exportam recortes agregados, sem receber PII ou SQL irrestrito |
+| Aprender com a ação | Recomendações comerciais são propostas como testes com grupo de controle e resultado incremental |
+| Evoluir pela necessidade | Soluções simples servem de baseline; complexidade adicional exige ganho mensurável |
+
+Uma frase que resume a defesa da solução é: **não se trata de eliminar o
+“feeling”, mas de transformá-lo em hipótese, testá-lo com dados e aprender com
+o resultado.**
+
 ## Resultados centrais — questões 1 a 7
 
 ### Q1 — EDA de `orders`

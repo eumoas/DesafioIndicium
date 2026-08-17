@@ -57,12 +57,20 @@ corte ainda é um gate de governança.
 
 ### 5:30–6:00 · Conclusão
 
+Conecte a entrega à cultura data-driven: o dashboard não substitui experiência
+por uma resposta automática. Ele transforma percepções em hipóteses
+rastreáveis, explicita a regra da métrica e permite medir o resultado depois da
+decisão.
+
 Proponha três próximos passos, nesta ordem:
 
 1. aprovar o contrato das métricas — status, moeda, reconhecimento e corte;
 2. testar o cross-sell com grupo de controle e resultado incremental;
 3. comparar o baseline de demanda com alternativas que incluam estoque, ruptura
    e lead time.
+
+Feche com a frase: **“Não quero eliminar o feeling; quero transformá-lo em uma
+hipótese que possamos testar, medir e melhorar.”**
 
 ## Perguntas que orientam a exploração
 

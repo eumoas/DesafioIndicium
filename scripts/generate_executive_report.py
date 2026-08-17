@@ -1455,15 +1455,23 @@ class ExecutiveReport:
             self.label(when, 648, y + 5, 10, WHITE, "bold")
             self.paragraph(action, 648, y - 14, 232, 8.5, 10.5, HexColor("#C5D8DE"), "regular", 3)
 
-        self.rect(MARGIN, 56, 864, 36, HexColor("#E8F4F2"), 10, HexColor("#BFDDD8"))
-        self.label("PRÓXIMA DECISÃO", MARGIN + 16, 68, 8, TEAL_DARK, "bold")
+        self.rect(MARGIN, 50, 864, 48, HexColor("#E8F4F2"), 10, HexColor("#BFDDD8"))
+        self.label("CULTURA DATA-DRIVEN", MARGIN + 16, 78, 8, TEAL_DARK, "bold")
         self.label(
-            "Aprovar o contrato de métricas; então testar recomendação e previsão com resultado incremental.",
-            MARGIN + 134,
-            68,
+            "Hipótese → métrica → evidência → experimento → resultado → aprendizado.",
+            MARGIN + 166,
+            78,
             8.5,
             INK,
             "semibold",
+        )
+        self.label(
+            "Próximo gate: aprovar o contrato das métricas antes de escalar recomendação ou previsão.",
+            MARGIN + 16,
+            60,
+            7.5,
+            MUTED,
+            "medium",
         )
         self.footer("similaridade é sinal, não causalidade")
         self.c.showPage()
