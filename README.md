@@ -5,16 +5,12 @@ exploração de dados, inferência de schema PostgreSQL, carga transacional,
 análises SQL, previsão de demanda, recomendação de produtos e comunicação
 executiva por dashboard e PDF.
 
-> **Autoria:** Miriam Oliveira de Aguiar Sobral — Cientista de Dados
+ **Autoria:** Miriam Oliveira de Aguiar Sobral — Cientista de Dados
 
 O repositório prioriza rastreabilidade e interpretação responsável. Os números
 publicados seguem literalmente as regras disponíveis, enquanto hipóteses de
 negócio não confirmadas permanecem explícitas.
 
-> **Atenção:** os 24 CSVs brutos na raiz contêm dados pessoais e operacionais.
-> Eles são necessários para reprodução local, mas **não devem ser publicados**.
-> Consulte [Segurança e dados sensíveis](#segurança-e-dados-sensíveis) antes de
-> compartilhar ou versionar este projeto.
 
 ## Visão do desafio
 
