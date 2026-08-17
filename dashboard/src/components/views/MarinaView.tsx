@@ -25,6 +25,8 @@ import {
   Panel,
   SectionHeading,
   Tag,
+  chartTooltipItemStyle,
+  chartTooltipLabelStyle,
   chartTooltipStyle,
 } from "../ui";
 
@@ -123,7 +125,7 @@ export function MarinaView({ data }: { data: DashboardData }) {
                   <CartesianGrid horizontal={false} stroke="#E6E8F2" strokeDasharray="2 5" />
                   <XAxis
                     axisLine={false}
-                    tick={{ fill: "#68708F", fontSize: 11 }}
+                    tick={{ fill: "#59617E", fontSize: 12, fontWeight: 550 }}
                     tickFormatter={(value) => formatCompact(value)}
                     tickLine={false}
                     type="number"
@@ -131,15 +133,17 @@ export function MarinaView({ data }: { data: DashboardData }) {
                   <YAxis
                     axisLine={false}
                     dataKey="name"
-                    tick={{ fill: "#303554", fontSize: 11, fontFamily: "Roboto Mono" }}
+                    tick={{ fill: "#303554", fontSize: 12, fontFamily: "Roboto Mono", fontWeight: 550 }}
                     tickLine={false}
                     type="category"
-                    width={78}
+                    width={112}
                   />
                   <Tooltip
                     contentStyle={chartTooltipStyle}
                     cursor={{ fill: "rgba(36, 91, 243, 0.06)" }}
                     formatter={(value) => [formatCurrency(Number(value)), "Ticket médio"]}
+                    itemStyle={chartTooltipItemStyle}
+                    labelStyle={chartTooltipLabelStyle}
                   />
                   <Bar dataKey="value" isAnimationActive={false} radius={[0, 7, 7, 0]}>
                     {elite.map((customer, index) => (

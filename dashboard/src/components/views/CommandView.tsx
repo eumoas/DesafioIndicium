@@ -27,6 +27,8 @@ import {
   Panel,
   SectionHeading,
   Tag,
+  chartTooltipItemStyle,
+  chartTooltipLabelStyle,
   chartTooltipStyle,
 } from "../ui";
 
@@ -128,21 +130,22 @@ export function CommandView({ data }: { data: DashboardData }) {
                     dataKey="label"
                     interval="preserveStartEnd"
                     minTickGap={36}
-                    tick={{ fill: "#68708F", fontSize: 11 }}
+                    tick={{ fill: "#59617E", fontSize: 12, fontWeight: 550 }}
                     tickLine={false}
                   />
                   <YAxis
                     axisLine={false}
-                    tick={{ fill: "#68708F", fontSize: 11 }}
+                    tick={{ fill: "#59617E", fontSize: 12, fontWeight: 550 }}
                     tickFormatter={(value) => formatCompact(value)}
                     tickLine={false}
-                    width={58}
+                    width={68}
                   />
                   <Tooltip
                     contentStyle={chartTooltipStyle}
                     cursor={{ stroke: "#BBBAFB", strokeDasharray: "3 3" }}
                     formatter={(value) => [formatCurrency(Number(value)), "Valor"]}
-                    labelStyle={{ color: "#AAE3E5", marginBottom: 6 }}
+                    itemStyle={chartTooltipItemStyle}
+                    labelStyle={chartTooltipLabelStyle}
                   />
                   <Area
                     activeDot={{ fill: "#F9F9F9", r: 5, stroke: "#245BF3", strokeWidth: 3 }}
@@ -191,6 +194,8 @@ export function CommandView({ data }: { data: DashboardData }) {
                       <Tooltip
                         contentStyle={chartTooltipStyle}
                         formatter={(value) => [formatCurrency(Number(value)), "Valor"]}
+                        itemStyle={chartTooltipItemStyle}
+                        labelStyle={chartTooltipLabelStyle}
                       />
                     </PieChart>
                   </ResponsiveContainer>

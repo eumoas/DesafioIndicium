@@ -208,9 +208,9 @@ code,
 
 .nav-item {
   display: grid;
-  grid-template-columns: 24px 20px minmax(0, 1fr) 16px;
+  grid-template-columns: 18px 18px minmax(0, 1fr) 12px;
   align-items: center;
-  gap: 9px;
+  gap: 7px;
   width: 100%;
   padding: 12px 10px;
   border: 1px solid transparent;
@@ -466,6 +466,7 @@ code,
 
 .view-explorer__questions {
   min-width: 0;
+  flex-wrap: wrap;
   gap: 13px;
 }
 
@@ -478,8 +479,9 @@ code,
 }
 
 .question-chips {
+  flex-wrap: wrap;
   gap: 6px;
-  overflow-x: auto;
+  overflow-x: visible;
 }
 
 .question-chips button,
@@ -968,6 +970,146 @@ code,
 .error-detail { margin: 18px 0; padding: 11px; border: 1px solid rgba(255,255,255,.09); border-radius: 9px; color: #d5d8ea; background: rgba(0,0,0,.16); font-family: "Roboto Mono", monospace; font-size: 9px; }
 .primary-button { display: inline-flex; align-items: center; gap: 7px; padding: 10px 13px; border: 0; border-radius: 9px; color: var(--navy); background: #aae3e5; cursor: pointer; font-size: 10px; font-weight: 750; }
 
+/* Readability calibration: keep supporting copy comfortably legible on dense views. */
+.brand-name small,
+.sidebar-label,
+.nav-item__copy small,
+.source-state__local { font-size: 11px; }
+.nav-item__count,
+.metric-card__index,
+.donut-center span,
+.insight-card__topline > span,
+.eligibility-score__ring small,
+.criteria-list > p,
+.category-row__rank,
+.almir-answer-grid__index,
+.method-steps li > span,
+.pipeline-flow__node span { font-size: 10px; }
+.nav-item__copy strong { font-size: 14px; }
+.source-state__topline strong { font-size: 12px; }
+.source-state p { font-size: 10px; }
+.eyebrow { font-size: 11px; }
+.topbar__copy > p:last-child { font-size: 14px; }
+.meta-chip small { font-size: 10px; }
+.meta-chip strong { font-size: 12px; }
+.dashboard-footer { font-size: 10px; }
+.view-explorer__label { font-size: 12px; }
+.question-chips button,
+.download-button,
+.report-button,
+.metric-toggle button { font-size: 11px; }
+.section-heading h2 { font-size: 18px; }
+.section-description { font-size: 12px; }
+.tag { font-size: 10px; }
+.empty-state strong { font-size: 13px; }
+.empty-state p,
+.inline-notice { font-size: 11px; }
+.command-intro__signal span:not(.pulse-ring) { font-size: 10px; }
+.command-intro__signal strong { font-size: 13px; }
+.command-intro__facts span { font-size: 11px; }
+.metric-card__header { font-size: 12px; }
+.metric-card > strong { font-size: clamp(22px, 2vw, 30px); }
+.metric-card__value {
+  overflow: visible;
+  max-width: 100%;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.metric-card__value--compact {
+  font-size: clamp(18px, 1.35vw, 20px) !important;
+  letter-spacing: -0.055em !important;
+}
+.metric-card__value--condensed {
+  font-size: clamp(16px, 1.15vw, 18px) !important;
+  letter-spacing: -0.06em !important;
+}
+.metric-card__footer p { max-width: 185px; font-size: 10.5px; line-height: 1.5; }
+.metric-trend { font-size: 10px; }
+.donut-center strong { font-size: 18px; }
+.legend-row,
+.legend-row strong { font-size: 11px; }
+.insight-card h3 { font-size: 15px; }
+.insight-card > p { font-size: 12px; line-height: 1.55; }
+.insight-card__evidence { font-size: 11px; }
+.persona-hero__copy > div > p:last-child { font-size: 12px; }
+.persona-hero__stats span { font-size: 10px; }
+.persona-hero__stats strong { font-size: 14px; }
+.eligibility-score__ring strong { font-size: 24px; }
+.eligibility-score__copy span { font-size: 11px; }
+.eligibility-score__copy strong { font-size: 13px; }
+.criteria-list > div span { font-size: 10px; }
+.criteria-list > div p { font-size: 11px; }
+.category-row__label,
+.category-row__label strong { font-size: 11px; }
+.channel-compare__label span,
+.channel-compare__label strong { font-size: 12px; }
+.channel-compare__row > small { font-size: 10px; }
+.almir-proof small,
+.code-stamp small { font-size: 10px; }
+.almir-proof strong,
+.code-stamp code { font-size: 11px; }
+.trust-strip small { font-size: 10px; }
+.trust-strip strong { font-size: 13px; }
+.trust-strip > p { font-size: 11px; }
+.almir-answer-grid small { font-size: 10px; }
+.almir-answer-grid strong { font-size: 13px; }
+.almir-answer-grid p { font-size: 11px; }
+.method-steps strong { font-size: 12px; }
+.method-steps p { font-size: 11px; }
+.check-row strong { font-size: 12px; }
+.check-row p { font-size: 10.5px; line-height: 1.5; }
+.source-row strong { font-size: 10.5px; }
+.source-row small,
+.source-row > span:last-child { font-size: 10px; }
+.source-summary small { font-size: 10px; }
+.source-summary strong { font-size: 12px; }
+.assumption-list summary span { font-size: 10px; }
+.assumption-list summary strong { font-size: 11.5px; }
+.assumption-list details > p { font-size: 11px; }
+.pipeline-flow__copy strong { font-size: 12px; }
+.pipeline-flow__copy p { font-size: 10.5px; }
+.forecast-kpis span,
+.forecast-kpis small { font-size: 10px; }
+.forecast-kpis strong { font-size: 14px; }
+.recommendation-seed small { font-size: 10px; }
+.recommendation-seed strong { font-size: 11px; }
+.recommendation-list__rank { font-size: 11px; }
+.recommendation-list__copy strong { font-size: 11px; }
+.recommendation-list__copy > div:first-child span,
+.recommendation-list__copy small { font-size: 10px; }
+.contract-map code { font-size: 11px; }
+.contract-map small { font-size: 10px; }
+.technical-facts small { font-size: 10px; }
+.technical-facts strong { font-size: 11px; }
+.scope-note code { font-size: 10px; }
+.scope-note p { font-size: 10.5px; }
+.gabriel-checks__heading { font-size: 11px; }
+.gabriel-checks__list > span { font-size: 10px; }
+.loading-label { font-size: 11px; }
+.error-card > p:not(.eyebrow) { font-size: 13px; }
+.error-card code { font-size: 12px; }
+.error-detail { font-size: 11px; }
+.primary-button { font-size: 12px; }
+
+/* Recharts also injects inline defaults; these guards keep every tooltip readable. */
+.recharts-tooltip-wrapper { z-index: 5; outline: none; }
+.recharts-default-tooltip {
+  border: 1px solid #d8ddeb !important;
+  border-radius: 12px !important;
+  background: rgba(255, 255, 255, 0.98) !important;
+  box-shadow: 0 16px 40px rgba(5, 7, 63, 0.16) !important;
+}
+.recharts-tooltip-label {
+  color: #3d28d9 !important;
+  font-weight: 750 !important;
+}
+.recharts-tooltip-item,
+.recharts-tooltip-item-name,
+.recharts-tooltip-item-value {
+  color: #11163f !important;
+  font-weight: 650 !important;
+}
+
 @media (max-width: 1250px) {
   .dashboard-shell, .loading-screen { grid-template-columns: 230px minmax(0,1fr); }
   .sidebar { padding-inline: 12px; }
@@ -989,7 +1131,7 @@ code,
   .sidebar-nav { display: flex; min-width: 0; flex-direction: row; justify-content: flex-end; overflow-x: auto; }
   .nav-item { width: auto; min-width: max-content; grid-template-columns: 18px auto; padding: 9px 11px; }
   .nav-item__count, .nav-item__chevron, .nav-item__copy small { display: none; }
-  .nav-item__copy strong { font-size: 10px; }
+  .nav-item__copy strong { font-size: 12px; }
   .topbar { min-height: 116px; }
   .business-grid, .operations-grid, .technical-grid { grid-template-columns: minmax(0,1.35fr) minmax(250px,.75fr); }
   .view-explorer { align-items: flex-start; }
@@ -1034,6 +1176,8 @@ code,
 @media (max-width: 480px) {
   .metric-grid { grid-template-columns: 1fr; }
   .metric-card { min-height: 125px; }
+  .metric-card__value--compact { font-size: 25px !important; }
+  .metric-card__value--condensed { font-size: 22px !important; }
   .persona-hero__copy { align-items: flex-start; }
   .persona-icon { width: 37px; height: 37px; flex-basis: 37px; }
   .persona-hero__stats { flex-direction: column; }

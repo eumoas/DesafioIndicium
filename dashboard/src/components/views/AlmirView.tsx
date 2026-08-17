@@ -27,6 +27,8 @@ import {
   Panel,
   SectionHeading,
   Tag,
+  chartTooltipItemStyle,
+  chartTooltipLabelStyle,
   chartTooltipStyle,
   displayStatus,
   statusTone,
@@ -159,12 +161,13 @@ export function AlmirView({ data }: { data: DashboardData }) {
                   <XAxis
                     axisLine={false}
                     dataKey="name"
-                    tick={{ fill: "#5C6381", fontSize: 11 }}
+                    tick={{ fill: "#505878", fontSize: 12, fontWeight: 550 }}
+                    tickFormatter={(value) => String(value).replace("-feira", "").slice(0, 3)}
                     tickLine={false}
                   />
                   <YAxis
                     axisLine={false}
-                    tick={{ fill: "#68708F", fontSize: 11 }}
+                    tick={{ fill: "#59617E", fontSize: 12, fontWeight: 550 }}
                     tickFormatter={(value) => weekdayMetric === "average" ? formatCompact(value) : formatNumber(value)}
                     tickLine={false}
                     width={62}
@@ -176,6 +179,8 @@ export function AlmirView({ data }: { data: DashboardData }) {
                       weekdayMetric === "average" ? formatCurrency(Number(value)) : `${formatNumber(Number(value))} dias`,
                       weekdayMetric === "average" ? "Valor bruto médio" : "Dias zerados",
                     ]}
+                    itemStyle={chartTooltipItemStyle}
+                    labelStyle={chartTooltipLabelStyle}
                   />
                   <Bar
                     dataKey={weekdayMetric === "average" ? "value" : "zeroDays"}

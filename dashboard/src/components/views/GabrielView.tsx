@@ -37,6 +37,8 @@ import {
   Panel,
   SectionHeading,
   Tag,
+  chartTooltipItemStyle,
+  chartTooltipLabelStyle,
   chartTooltipStyle,
   displayStatus,
   statusTone,
@@ -166,12 +168,12 @@ export function GabrielView({ data }: { data: DashboardData }) {
                     <XAxis
                       axisLine={false}
                       dataKey="month"
-                      tick={{ fill: "#68708F", fontSize: 11 }}
+                      tick={{ fill: "#59617E", fontSize: 12, fontWeight: 550 }}
                       tickLine={false}
                     />
                     <YAxis
                       axisLine={false}
-                      tick={{ fill: "#68708F", fontSize: 11 }}
+                      tick={{ fill: "#59617E", fontSize: 12, fontWeight: 550 }}
                       tickLine={false}
                     />
                     <Tooltip
@@ -180,11 +182,13 @@ export function GabrielView({ data }: { data: DashboardData }) {
                         `${formatNumber(Number(value))} un.`,
                         name === "prediction" ? "Previsão" : "Realizado",
                       ]}
+                      itemStyle={chartTooltipItemStyle}
+                      labelStyle={chartTooltipLabelStyle}
                     />
                     <Legend
                       formatter={(value) => (value === "prediction" ? "Previsão" : "Realizado")}
                       iconType="circle"
-                      wrapperStyle={{ fontSize: 11, color: "#5C6381" }}
+                      wrapperStyle={{ fontSize: 12, color: "#505878", fontWeight: 600 }}
                     />
                     <Line
                       activeDot={{ r: 5, strokeWidth: 3 }}

@@ -13,13 +13,29 @@ export const CHART_COLORS = [
 ] as const;
 
 export const chartTooltipStyle: CSSProperties = {
-  background: "rgba(5, 7, 63, 0.96)",
-  border: "1px solid rgba(187, 186, 251, 0.26)",
+  background: "rgba(255, 255, 255, 0.98)",
+  border: "1px solid #D8DDEB",
   borderRadius: "12px",
-  boxShadow: "0 14px 36px rgba(5, 7, 63, 0.2)",
-  color: "#F9F9F9",
+  boxShadow: "0 16px 40px rgba(5, 7, 63, 0.16)",
+  color: "#11163F",
   fontFamily: "Inter, sans-serif",
+  fontSize: "13px",
+  lineHeight: 1.45,
+  padding: "11px 13px",
+};
+
+export const chartTooltipLabelStyle: CSSProperties = {
+  color: "#3D28D9",
   fontSize: "12px",
+  fontWeight: 750,
+  marginBottom: "7px",
+};
+
+export const chartTooltipItemStyle: CSSProperties = {
+  color: "#11163F",
+  fontSize: "13px",
+  fontWeight: 650,
+  paddingBlock: "2px",
 };
 
 export function Panel({
@@ -105,6 +121,8 @@ export function MetricCard({
   const isDown = trend === "down" || (change !== null && change < 0);
   const TrendIcon = isDown ? ArrowDownRight : ArrowUpRight;
   const label = card.label ?? card.title ?? `Indicador ${index + 1}`;
+  const displayValue = inferCardValue(card);
+  const valueSize = displayValue.length > 16 ? "condensed" : displayValue.length > 10 ? "compact" : "default";
 
   return (
     <article className="metric-card" data-testid={`metric-card-${index}`}>
@@ -113,7 +131,12 @@ export function MetricCard({
         <span>{label}</span>
         <span className="metric-card__index">0{index + 1}</span>
       </div>
-      <strong>{inferCardValue(card)}</strong>
+      <strong
+        className={`metric-card__value metric-card__value--${valueSize}`}
+        title={displayValue}
+      >
+        {displayValue}
+      </strong>
       <div className="metric-card__footer">
         <p>{card.detail ?? card.description ?? card.source ?? "Indicador consolidado"}</p>
         {change !== null ? (
