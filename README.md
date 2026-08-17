@@ -23,6 +23,8 @@ negócio não confirmadas permanecem explícitas.
 
 ## Insights em 30 segundos
 
+📄 [Abra o resumo executivo com os insights organizados por decisão.](deliverables/LH_Nautical_Resumo_Executivo.pdf)
+
 | Perspectiva | O que os dados mostram | Implicação para a decisão |
 |---|---|---|
 | **Segmentação** | 1.971 de 2.000 clientes (98,55%) passam pelo corte de “elite” | O critério de 13 categorias quase não segmenta; recência, frequência mínima e margem tornariam o grupo mais acionável. |

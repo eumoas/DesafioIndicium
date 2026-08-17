@@ -5,7 +5,7 @@
 A entrega complementar combina dois formatos:
 
 - [`dashboard/`](../dashboard/README.md): exploração interativa por perspectiva;
-- [`LH_Nautical_Resumo_Executivo.pdf`](../deliverables/LH_Nautical_Resumo_Executivo.pdf): narrativa fixa de oito páginas, em 16:9, para leitura ou apresentação.
+- [`LH_Nautical_Resumo_Executivo.pdf`](../deliverables/LH_Nautical_Resumo_Executivo.pdf): narrativa fixa de nove páginas, em 16:9, com uma página dedicada aos insights para decisão.
 
 O dashboard está publicado em
 [desafioindicium.eumoas.workers.dev](https://desafioindicium.eumoas.workers.dev)
@@ -134,7 +134,7 @@ conteúdo exportado.
 O modo de impressão inclui apenas a persona ativa, seu cabeçalho, período,
 cards e gráficos; sidebar, perguntas e controles ficam ocultos. O recurso chama
 a impressão do navegador: não existe geração em backend nem nome de arquivo
-garantido. O PDF executivo completo continua sendo o arquivo de oito páginas
+garantido. O PDF executivo completo continua sendo o arquivo de nove páginas
 linkado no início deste documento.
 
 ## Regeneração e execução local
@@ -178,5 +178,5 @@ npm run preview
 - testar a navegação e os chips nas quatro visões;
 - baixar um CSV de cada visão e conferir que não contém campos identificadores;
 - abrir a prévia do mini-relatório em cada aba;
-- conferir as oito páginas do PDF e manter a ressalva “valor registrado”;
+- conferir as nove páginas do PDF e manter a ressalva “valor registrado”;
 - abrir a URL pública em uma janela anônima e confirmar o carregamento do JSON.

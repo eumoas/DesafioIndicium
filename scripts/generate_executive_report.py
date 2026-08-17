@@ -33,6 +33,7 @@ DEFAULT_OUTPUT = ROOT / "deliverables" / "LH_Nautical_Resumo_Executivo.pdf"
 PAGE_W = 960.0
 PAGE_H = 540.0
 MARGIN = 48.0
+TOTAL_PAGES = 9
 
 INK = HexColor("#102A3A")
 NAVY = HexColor("#071E2B")
@@ -876,7 +877,15 @@ class ExecutiveReport:
         else:
             period_text = str(period)
         self.label(f"LH Nautical · {period_text} · {note}", MARGIN, 24, 8, MUTED, "medium")
-        self.label(f"{self.page_number:02d} / 08", PAGE_W - MARGIN, 24, 8, MUTED, "bold", "right")
+        self.label(
+            f"{self.page_number:02d} / {TOTAL_PAGES:02d}",
+            PAGE_W - MARGIN,
+            24,
+            8,
+            MUTED,
+            "bold",
+            "right",
+        )
 
     def kpi_card(
         self,
@@ -916,6 +925,41 @@ class ExecutiveReport:
             self.label(number, x + 9, y - 6, 8, WHITE, "bold", "center")
         self.label(title, x + 28, y + 2, 11, INK, "bold")
         return self.paragraph(body, x + 28, y - 16, width - 28, 8.7, 11.3, MUTED, "regular", 3)
+
+    def decision_insight_card(
+        self,
+        x: float,
+        y: float,
+        persona: str,
+        topic: str,
+        accent: Color,
+        evidence: str,
+        implication: str,
+        action: str,
+        caveat: str,
+    ) -> None:
+        width, height = 278.0, 157.0
+        self.rect(x, y, width, height, PAPER, 14, LINE)
+        self.rect(x, y + height - 29, width, 29, NAVY_2, 10)
+        self.c.setFillColor(accent)
+        self.c.circle(x + 17, y + height - 14.5, 4.5, fill=1, stroke=0)
+        self.label(persona.upper(), x + 29, y + height - 18, 8.3, WHITE, "black")
+        self.label(topic.upper(), x + width - 13, y + height - 18, 7.1, MINT, "bold", "right")
+
+        self.label("EVIDÊNCIA", x + 14, y + 112, 6.5, TEAL_DARK, "bold")
+        self.paragraph(evidence, x + 72, y + 113, width - 86, 8.2, 9.3, INK, "bold", 2)
+
+        self.label("IMPLICAÇÃO", x + 14, y + 82, 6.5, TEAL_DARK, "bold")
+        self.paragraph(implication, x + 72, y + 83, width - 86, 7.1, 8.4, INK, "medium", 2)
+
+        self.label("AÇÃO", x + 14, y + 52, 6.5, TEAL_DARK, "bold")
+        self.paragraph(action, x + 48, y + 53, width - 62, 7.1, 8.4, INK, "medium", 2)
+
+        self.rect(x + 10, y + 8, width - 20, 24, HexColor("#F3F0E8"), 8)
+        self.c.setFillColor(accent)
+        self.c.circle(x + 20, y + 20, 3.5, fill=1, stroke=0)
+        self.label("RESSALVA", x + 30, y + 17, 6.1, INK, "bold")
+        self.paragraph(caveat, x + 78, y + 22, width - 94, 6.4, 7.2, MUTED, "regular", 2)
 
     def draw_cover(self) -> None:
         self.page_number += 1
@@ -981,7 +1025,7 @@ class ExecutiveReport:
         self.label(br_number(source_count), MARGIN + 170, 166, 13, WHITE, "bold")
         self.label("FONTES CSV", MARGIN + 170, 151, 7.5, MINT, "bold")
         self.c.line(MARGIN + 270, 153, MARGIN + 270, 184)
-        self.label("8 páginas", MARGIN + 296, 166, 13, WHITE, "bold")
+        self.label(f"{TOTAL_PAGES} páginas", MARGIN + 296, 166, 13, WHITE, "bold")
         self.label("LEITURA EXECUTIVA", MARGIN + 296, 151, 7.5, MINT, "bold")
 
         generated_at = metadata.get("generatedAt")
@@ -995,7 +1039,90 @@ class ExecutiveReport:
             HexColor("#8FAAB5"),
             "medium",
         )
-        self.label("01 / 08", PAGE_W - MARGIN, 54, 8.5, MINT, "bold", "right")
+        self.label(
+            f"01 / {TOTAL_PAGES:02d}",
+            PAGE_W - MARGIN,
+            54,
+            8.5,
+            MINT,
+            "bold",
+            "right",
+        )
+        self.c.showPage()
+
+    def draw_decision_insights(self) -> None:
+        self.start_page(
+            "Insights para decisão",
+            "01 · Decisão",
+            "Evidência primeiro: o que cada liderança pode decidir agora, qual ação testar e onde a leitura ainda precisa de proteção.",
+        )
+        self.decision_insight_card(
+            MARGIN,
+            235,
+            "Marina",
+            "Segmentação",
+            TEAL,
+            "98,55% passam na “elite”.",
+            "O corte quase não segmenta; ticket domina o ranking.",
+            "Adicionar recência, frequência mínima, margem e janela.",
+            "A regra cumpre o desafio; não demonstra fidelidade.",
+        )
+        self.decision_insight_card(
+            341,
+            235,
+            "Marina",
+            "Canais",
+            SKY,
+            "E-commerce: 70,19% do valor · 70,09% dos pedidos.",
+            "Escala digital é clara; rentabilidade permanece desconhecida.",
+            "Comparar margem, devoluções e custo de servir.",
+            "Valor registrado não é receita reconhecida nem lucro.",
+        )
+        self.decision_insight_card(
+            634,
+            235,
+            "Marina",
+            "Recomendação",
+            LAVENDER,
+            "Motor de Popa 5331 #1; primeira defensa #15.",
+            "Afinidade de público não prova complementaridade.",
+            "Aplicar regra comercial e teste com grupo de controle.",
+            "Todos os status; sem propensão individual estimada.",
+        )
+        self.decision_insight_card(
+            MARGIN,
+            64,
+            "Sr. Almir",
+            "Operação POS",
+            ORANGE,
+            "Quinta só 0,29% abaixo de domingo: 461,81.",
+            "A diferença não sustenta fechar lojas.",
+            "Analisar loja-dia, custos e migração de demanda.",
+            "Rede agregada; sem margem ou efeito causal.",
+        )
+        self.decision_insight_card(
+            341,
+            64,
+            "Sr. Almir",
+            "Previsão",
+            YELLOW,
+            "−28,18% no trimestre · MAE 19,44 un./mês.",
+            "O baseline subestima; não deve comandar compras.",
+            "Testar estoque, ruptura, promoção e lead time.",
+            "Apenas três meses de teste.",
+        )
+        self.decision_insight_card(
+            634,
+            64,
+            "Gabriel",
+            "Confiança",
+            SKY,
+            "24 fontes · 433.424 registros · sem órfãos.",
+            "A estrutura sustenta exploração reproduzível.",
+            "Aprovar status, moeda, reconhecimento e corte.",
+            "Consistência técnica não certifica KPIs financeiros.",
+        )
+        self.footer("valor registrado · decisões com ressalvas explícitas")
         self.c.showPage()
 
     def draw_summary(self) -> None:
@@ -1011,7 +1138,7 @@ class ExecutiveReport:
 
         self.start_page(
             "O que a diretoria precisa saber",
-            "01 · Resumo",
+            "02 · Resumo",
             "A base abre boas decisões exploratórias; a regra de reconhecimento ainda precisa ser fechada antes de qualquer KPI financeiro.",
         )
         card_w = 198
@@ -1077,7 +1204,7 @@ class ExecutiveReport:
         )
         self.start_page(
             "Confiabilidade condicional",
-            "02 · Confiança",
+            "03 · Confiança",
             "A estrutura observada é consistente para exploração; regras de negócio pendentes impedem uma leitura financeira certificada.",
         )
         self.rect(MARGIN, 304, 555, 88, NAVY_2, 14)
@@ -1184,7 +1311,7 @@ class ExecutiveReport:
         top_status = statuses[0] if statuses else {"status": "—", "value": 0, "orders": 0}
         self.start_page(
             "Comercial: escala e composição",
-            "03 · Comercial",
+            "04 · Comercial",
             "O snapshot registra expansão de volume, mas toda leitura permanece bruta: valores incluem quatro status e não equivalem a receita reconhecida.",
         )
         self.kpi_card(MARGIN, 319, 176, 76, "Valor no arquivo", compact_value(total_value), "orders.total acumulado", TEAL)
@@ -1243,7 +1370,7 @@ class ExecutiveReport:
         categories = self.data["customers"]["topEliteCategories"]
         self.start_page(
             "Clientes: ranking com ressalva",
-            "04 · Clientes",
+            "05 · Clientes",
             "O top 10 segue exatamente a regra pedida, mas o corte de diversidade aprova quase toda a base e não caracteriza fidelidade sozinho.",
         )
         self.rect(MARGIN, 74, 590, 318, PAPER, 14, LINE)
@@ -1298,7 +1425,7 @@ class ExecutiveReport:
         delta_pct = 100 * delta_sunday / max(as_number(sunday.get("average") if sunday else 0), 1)
         self.start_page(
             "POS: calendário muda a média",
-            "05 · Operação física",
+            "06 · Operação física",
             "Ao incluir dias sem registro como zero, quinta-feira tem a menor média — uma diferença pequena demais para sustentar fechamento de lojas.",
         )
         self.rect(MARGIN, 84, 602, 308, PAPER, 14, LINE)
@@ -1352,7 +1479,7 @@ class ExecutiveReport:
         gap = predicted_total - actual_total
         self.start_page(
             "Previsão: baseline antes de automação",
-            "06 · Demanda",
+            "07 · Demanda",
             "A média móvel de três meses é auditável e útil como referência; no teste, subestimou todos os meses e não deve comandar compras sozinha.",
         )
         self.kpi_card(MARGIN, 319, 176, 76, "MAE", f"{br_number(mae, 2)} un.", "erro absoluto médio mensal", ORANGE)
@@ -1414,7 +1541,7 @@ class ExecutiveReport:
         target = str(recommendation.get("target", "produto-alvo"))
         self.start_page(
             "Recomendação e próximos passos",
-            "07 · Ação",
+            "08 · Ação",
             "O sinal de co-compra orienta teste controlado de cross-sell; desempenho deve ser medido antes de escalar para campanha ou estoque.",
         )
         self.rect(MARGIN, 106, 528, 286, PAPER, 14, LINE)
@@ -1480,6 +1607,7 @@ class ExecutiveReport:
 
     def build(self) -> None:
         self.draw_cover()
+        self.draw_decision_insights()
         self.draw_summary()
         self.draw_confidence()
         self.draw_commercial()
