@@ -781,7 +781,7 @@ class ExecutiveReport:
         self.c = canvas.Canvas(str(output), pagesize=(PAGE_W, PAGE_H), pageCompression=1)
         self.c.setTitle("LH Nautical — Resumo Executivo")
         self.c.setSubject("Síntese executiva baseada em dados operacionais agregados")
-        self.c.setAuthor("Análise de dados — LH Nautical")
+        self.c.setAuthor("Miriam Oliveira de Aguiar Sobral — Cientista de Dados")
         self.page_number = 0
 
     def rect(
@@ -985,6 +985,8 @@ class ExecutiveReport:
         self.label("LEITURA EXECUTIVA", MARGIN + 296, 151, 7.5, MINT, "bold")
 
         generated_at = metadata.get("generatedAt")
+        self.label("CIENTISTA DE DADOS", MARGIN, 103, 7.5, MINT, "bold")
+        self.label("Miriam Oliveira de Aguiar Sobral", MARGIN, 84, 11, WHITE, "bold")
         self.label(
             f"Gerado em {br_date(generated_at)} · material agregado e anonimizado",
             MARGIN,

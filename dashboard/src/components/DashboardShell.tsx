@@ -171,7 +171,7 @@ export function DashboardShell({
           {children}
         </div>
         <footer className="dashboard-footer">
-          <span>LH Nautical · intelligence deck</span>
+          <span>Miriam Oliveira de Aguiar Sobral · Cientista de Dados</span>
           <span>Leitura agregada · sem dados pessoais</span>
         </footer>
       </main>

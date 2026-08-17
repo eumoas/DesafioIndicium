@@ -5,6 +5,8 @@ exploração de dados, inferência de schema PostgreSQL, carga transacional,
 análises SQL, previsão de demanda, recomendação de produtos e comunicação
 executiva por dashboard e PDF.
 
+> **Autoria:** Miriam Oliveira de Aguiar Sobral — Cientista de Dados
+
 O repositório prioriza rastreabilidade e interpretação responsável. Os números
 publicados seguem literalmente as regras disponíveis, enquanto hipóteses de
 negócio não confirmadas permanecem explícitas.
