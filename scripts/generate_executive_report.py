@@ -19,6 +19,9 @@ from pathlib import Path
 from typing import Any, Dict, List, Mapping, MutableMapping, Optional, Sequence, Tuple
 
 import pandas as pd
+from reportlab.graphics import renderPDF
+from reportlab.graphics.barcode.qr import QrCodeWidget
+from reportlab.graphics.shapes import Drawing
 from reportlab.lib.colors import Color, HexColor
 from reportlab.lib.utils import ImageReader
 from reportlab.pdfbase import pdfmetrics
@@ -908,30 +911,59 @@ class ExecutiveReport:
         self.c.circle(center_x, center_y, size * 0.046, fill=1, stroke=0)
         self.c.restoreState()
 
-    def link_button(
+    def access_card(
         self,
         x: float,
         y: float,
         width: float,
-        label: str,
+        title: str,
+        display_url: str,
         url: str,
-        fill: Color = DASHBOARD_BLUE,
-        text_color: Color = WHITE,
-        font_size: float = 7.5,
+        fill: Color,
+        height: float = 44,
     ) -> None:
-        """Renderiza um acesso visível e cria a anotação clicável no PDF."""
+        """Combina link PDF, URL legível e QR Code para leitores restritivos."""
 
-        height = 30.0
         self.rect(
             x,
             y,
             width,
             height,
             fill,
-            9,
-            Color(1, 1, 1, alpha=0.18),
+            10,
+            Color(1, 1, 1, alpha=0.22),
         )
-        self.label(label, x + width / 2, y + 10.5, font_size, text_color, "bold", "center")
+        qr_size = height - 10
+        qr_x = x + 6
+        qr_y = y + 5
+        self.rect(qr_x - 1.5, qr_y - 1.5, qr_size + 3, qr_size + 3, WHITE, 4)
+
+        qr = QrCodeWidget(url)
+        bounds = qr.getBounds()
+        qr_width = bounds[2] - bounds[0]
+        qr_height = bounds[3] - bounds[1]
+        drawing = Drawing(
+            qr_size,
+            qr_size,
+            transform=[qr_size / qr_width, 0, 0, qr_size / qr_height, 0, 0],
+        )
+        drawing.add(qr)
+        renderPDF.draw(drawing, self.c, qr_x, qr_y)
+
+        text_x = qr_x + qr_size + 8
+        text_width = width - (text_x - x) - 8
+        self.label(title.upper(), text_x, y + height / 2 + 7, 7.1, WHITE, "bold")
+        self.paragraph(
+            display_url,
+            text_x,
+            y + height / 2 - 7,
+            text_width,
+            5.7,
+            7,
+            WHITE,
+            "medium",
+            2,
+        )
         self.c.linkURL(url, (x, y, x + width, y + height), relative=0, thickness=0)
 
     def profile_photo(self, x: float, y: float, size: float) -> None:
@@ -1104,25 +1136,25 @@ class ExecutiveReport:
 
         self.lh_mark(MARGIN, 454, 34)
         self.label("LH NAUTICAL  /  VISÃO DE DADOS", MARGIN + 46, 467, 10, MINT, "bold")
-        self.link_button(
-            445,
-            456,
-            257,
-            "DASHBOARD · desafioindicium.eumoas.workers.dev",
+        self.access_card(
+            425,
+            420,
+            280,
+            "Abrir dashboard",
+            "https://desafioindicium.eumoas.workers.dev",
             DASHBOARD_URL,
             HexColor("#111368"),
-            WHITE,
-            7.2,
+            72,
         )
-        self.link_button(
-            714,
-            456,
-            198,
-            "GITHUB · eumoas/DesafioIndicium",
+        self.access_card(
+            717,
+            420,
+            195,
+            "Ver repositório",
+            "https://github.com/eumoas/\nDesafioIndicium",
             REPOSITORY_URL,
             DASHBOARD_LAVENDER,
-            WHITE,
-            7.2,
+            72,
         )
         self.paragraph("Resumo\nexecutivo", MARGIN, 373, 540, 57, 55, WHITE, "black")
         self.paragraph(
@@ -1194,19 +1226,19 @@ class ExecutiveReport:
         )
 
         self.rect(MARGIN, 58, 244, 326, DASHBOARD_NAVY, 18)
-        self.profile_photo(MARGIN + 29, 170, 186)
-        self.label("Miriam Oliveira", MARGIN + 22, 139, 14, WHITE, "black")
-        self.label("de Aguiar Sobral", MARGIN + 22, 120, 14, WHITE, "black")
-        self.label("CIENTISTA DE DADOS", MARGIN + 22, 97, 8, MINT, "bold")
-        self.link_button(
-            MARGIN + 18,
-            67,
-            208,
-            "linkedin.com/in/miriamaguiarsobral",
+        self.profile_photo(MARGIN + 29, 190, 186)
+        self.label("Miriam Oliveira", MARGIN + 22, 165, 14, WHITE, "black")
+        self.label("de Aguiar Sobral", MARGIN + 22, 146, 14, WHITE, "black")
+        self.label("CIENTISTA DE DADOS", MARGIN + 22, 130, 8, MINT, "bold")
+        self.access_card(
+            MARGIN + 14,
+            63,
+            216,
+            "LinkedIn",
+            "https://linkedin.com/in/miriamaguiarsobral",
             LINKEDIN_URL,
             HexColor("#111368"),
-            WHITE,
-            7.3,
+            60,
         )
 
         content_x = 324

@@ -26,7 +26,13 @@ negócio não confirmadas permanecem explícitas.
 
 ## Insights em 30 segundos
 
-📄 [Abra o resumo executivo com os insights organizados por decisão.](deliverables/LH_Nautical_Resumo_Executivo.pdf)
+📄 [Baixe o resumo executivo com os insights organizados por
+decisão.](https://raw.githubusercontent.com/eumoas/DesafioIndicium/main/deliverables/LH_Nautical_Resumo_Executivo.pdf)
+
+Os acessos também permanecem disponíveis fora do PDF:
+[dashboard](https://desafioindicium.eumoas.workers.dev/),
+[repositório](https://github.com/eumoas/DesafioIndicium) e
+[LinkedIn](https://www.linkedin.com/in/miriamaguiarsobral).
 
 | Perspectiva | O que os dados mostram | Implicação para a decisão |
 |---|---|---|
